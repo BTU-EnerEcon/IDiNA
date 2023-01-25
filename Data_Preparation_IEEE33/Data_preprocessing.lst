@@ -1,0 +1,127 @@
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 10:09:59 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  Set
+   2     t                           / 1*96    /
+   3     b        'network buses'    / 1*33    /
+   4     l        'lines'            / 1*35   /
+   5     g        'dispatchable generating units' / 1*5   /
+   6     p        'solar photovoltaik generators' /1*4  /
+   7     s        'scenarios'        / s1*s1000/
+   8     slack(b)                    / 1       /
+   9     Map_G(b,g)/1.1, 18.2, 22.3, 25.4,33.5/
+  10     Map_PV(b,p) /18.1, 22.2, 25.3, 33.4/
+  11   
+  12    it /1/
+  13  ;
+  14  alias (b,bb)
+  15  ;
+  16  Parameter
+  17  Load_deviation(s,b,t)
+  18  PTDF_PBPK(l,b,t)
+  19  PTDF_PBQK(l,b,t)
+  20  pl(l,t)
+  21  PF_result(s,l,t)
+  22   
+  23  sLmax_scaled(l)
+  24  slmax(l,t)
+  25   
+  26   
+  27  uki(b,t)
+  28  ukr(b,t)
+  29  ukn(b,t)
+  30   
+  31  Vl(b,t)
+  32  VL_result(s,b,t)
+  33  PTDF_UKPK(b,bb,t)
+  34  PTDF_UKQK(b,bb,t)
+  35   
+  36  Line_Violation_test(s,l,t)
+  37  Voltage_violation_up(s,b,t)
+  38  Voltage_violation_lo(s,b,t)
+  39   
+  40  ;
+  41   
+  45  ;
+GDXIN   C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+--- LOAD  Load_deviation = 1:Load_deviation
+  52   
+  53   
+GDXIN   C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter_l.gdx
+--- LOAD  pl = 8:pL
+--- LOAD  slmax = 12:sLmax
+--- LOAD  uki = 3:uKi
+--- LOAD  ukr = 2:uKr
+--- LOAD  ukn = 11:uKn
+--- LOAD  PTDF_PBPK = 4:PTDF_PBPK
+--- LOAD  PTDF_PBQK = 5:PTDF_PBQK
+--- LOAD  PTDF_UKPK = 6:PTDF_UKPK
+--- LOAD  PTDF_UKQK = 7:PTDF_UKQK
+  56  ;
+  57  *$GDXin   Input_summer_l.gdx
+  58  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+  59  *;
+  60  *$GDXin   Input_summer_h.gdx
+  61  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+  62  *;
+  63  *$GDXin   Input_summer_vh.gdx
+  64  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+  65  *;
+  66   
+  67  sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/96);
+  68  sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
+  69   
+  70  *in MW
+  71  PF_result(s,l,t) = (pl(l,t) + sum(b, Load_deviation(s,b,t) * PTDF_PBPK(l,b,t) *1000000))/1000000
+  72  ;
+  73  *in kV
+  74  Vl(b,t) = (sqrt(uki(b,t)*uki(b,t) + ukr(b,t)*ukr(b,t)))/1000
+  75  ;
+  76  VL_result(s,b,t) = Vl(b,t) + sum(bb, Load_deviation(s,b,t) * (1000 *PTDF_UKPK(b,bb,t)))
+  77  ;
+  78  Line_Violation_test(s,l,t) = PF_result(s,l,t) - sLmax_scaled(l)
+  79  ;
+  80  Voltage_violation_up(s,b,t)$((VL_result(s,b,t)*1000 - ukn(b,t)*1.05) gt 0) = VL_result(s,b,t)*1000 - (ukn(b,t)*1.05)
+  81  ;
+  82  Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (ukn(b,t)*0.95) - VL_result(s,b,t)*1000
+  83  ;
+  84  execute_unload "Data.gdx"
+  85  ;
+  86  execute 'gdxxrw.exe Data.gdx o=PF_Data_w_lpv_10.xlsx par=PF_result'
+  87  ;
+  88  execute 'gdxxrw.exe Data.gdx o=VL_Data_w_lpv_10.xlsx par=VL_result'
+STOP C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 10:09:59 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
+     2       47 CALL           1      47  gdxxrw Data.xlsx @TEP.txt
+     3       48 GDXIN          1      48  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+     4       54 GDXIN          1      54  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter_l.gdx
+     5       89 STOP           1      89  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
+
+
+COMPILATION TIME     =       11.266 SECONDS    116 MB  41.4.0 caab8bc0 WEX-WEI
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 10:09:59 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+EXECUTION TIME       =       41.062 SECONDS    441 MB  41.4.0 caab8bc0 WEX-WEI
+
+
+USER: Small MUD - 5 User License                     S211124|0002AN-WIN
+      BTU Cottbus-Senftenberg, FG Energiewirtschaft              DC5591
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
+Output     C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.lst
