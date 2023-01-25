@@ -1,5 +1,5 @@
 
---- Job Data_preprocessing.gms Start 01/25/23 00:35:39 41.4.0 caab8bc0 WEX-WEI x86 64bit/MS Windows
+--- Job Data_preprocessing.gms Start 01/25/23 10:00:18 41.4.0 caab8bc0 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\41\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -22,28 +22,35 @@ GAMS 41.4.0   Copyright (C) 1987-2022 GAMS Development. All rights reserved
 --- Data_preprocessing.gms(42) 3 Mb
 --- $echo File C:\Users\berne\IDiNA_Mote_Carlo\Complete\TEP.txt
 --- Data_preprocessing.gms(47) 3 Mb
---- call gdxxrw check.xlsx @TEP.txt
+--- call gdxxrw Data.xlsx @TEP.txt
 
 GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
-Input file : C:\Users\berne\IDiNA_Mote_Carlo\Complete\check.xlsx
-Output file: C:\Users\berne\IDiNA_Mote_Carlo\Complete\check.gdx
-Total time = 7297 Ms
+Input file : C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.xlsx
+Output file: C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+Total time = 11750 Ms
 --- Data_preprocessing.gms(48) 3 Mb
---- GDXin=C:\Users\berne\IDiNA_Mote_Carlo\Complete\check.gdx
---- GDX File ($gdxIn) C:\Users\berne\IDiNA_Mote_Carlo\Complete\check.gdx
---- Data_preprocessing.gms(49) 3 Mb 1 Error
-*** Error 495 in C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
-    Load dimensions are different
---- Data_preprocessing.gms(54) 3 Mb
---- GDXin=C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter.gdx
---- GDX File ($gdxIn) C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter.gdx
---- Data_preprocessing.gms(62) 17 Mb 2 Errors
-*** Error 141 in C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
-    Symbol declared but no values have been assigned. Check for missing
-       data definition, assignment, data loading or implicit assignment
-       via a solve statement.
-       A wild shot: You may have spurious commas in the explanatory
-       text of a declaration. Check symbol reference list.
---- Data_preprocessing.gms(76) 17 Mb 2 Errors
-*** Status: Compilation error(s)
---- Job Data_preprocessing.gms Stop 01/25/23 00:35:47 elapsed 0:00:07.436
+--- GDXin=C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+--- GDX File ($gdxIn) C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+--- Data_preprocessing.gms(54) 103 Mb
+--- GDXin=C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter_l.gdx
+--- GDX File ($gdxIn) C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter_l.gdx
+--- Data_preprocessing.gms(89) 116 Mb
+--- Starting execution: elapsed 0:00:12.169
+--- Data_preprocessing.gms(71) 294 Mb  12 secs
+--- Data_preprocessing.gms(76) 320 Mb  9 secs
+--- Data_preprocessing.gms(84) 441 Mb
+--- GDX File (execute_unload) C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+--- Data_preprocessing.gms(86) 441 Mb
+
+GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
+Input file : C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+Output file: C:\Users\berne\IDiNA_Mote_Carlo\Complete\PF_Data_w_lpv_07.xlsx
+Total time = 10437 Ms
+--- Data_preprocessing.gms(88) 441 Mb
+
+GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
+Input file : C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+Output file: C:\Users\berne\IDiNA_Mote_Carlo\Complete\VL_Data_w_lpv_07.xlsx
+Total time = 10015 Ms
+*** Status: Normal completion
+--- Job Data_preprocessing.gms Stop 01/25/23 10:01:16 elapsed 0:00:57.862

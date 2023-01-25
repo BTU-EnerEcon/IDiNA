@@ -1,4 +1,4 @@
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 00:40:18 Page 1
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 10:09:59 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -45,11 +45,11 @@ C o m p i l a t i o n
   40  ;
   41   
   45  ;
-GDXIN   C:\Users\berne\IDiNA_Mote_Carlo\Complete\check.gdx
+GDXIN   C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
 --- LOAD  Load_deviation = 1:Load_deviation
   52   
   53   
-GDXIN   C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter.gdx
+GDXIN   C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter_l.gdx
 --- LOAD  pl = 8:pL
 --- LOAD  slmax = 12:sLmax
 --- LOAD  uki = 3:uKi
@@ -60,27 +60,40 @@ GDXIN   C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter.gdx
 --- LOAD  PTDF_UKPK = 6:PTDF_UKPK
 --- LOAD  PTDF_UKQK = 7:PTDF_UKQK
   56  ;
-  57   
-  58  sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/96);
-  59  sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
-  60   
-  61  *in MW
-  62  PF_result(s,l,t) = (pl(l,t) + sum(b, Load_deviation(s,b,t) * PTDF_PBPK(l,b,t) *1000000))/1000000
-  63  ;
-  64  *in kV
-  65  Vl(b,t) = (sqrt(uki(b,t)*uki(b,t) + ukr(b,t)*ukr(b,t)))/1000
-  66  ;
-  67  VL_result(s,b,t) = Vl(b,t) + sum(bb, Load_deviation(s,b,t) * (1000 *PTDF_UKPK(b,bb,t)))
-  68  ;
-  69  Line_Violation_test(s,l,t) = PF_result(s,l,t) - sLmax_scaled(l)
-  70  ;
-  71  Voltage_violation_up(s,b,t)$((VL_result(s,b,t)*1000 - ukn(b,t)*1.05) gt 0) = VL_result(s,b,t)*1000 - (ukn(b,t)*1.05)
+  57  *$GDXin   Input_summer_l.gdx
+  58  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+  59  *;
+  60  *$GDXin   Input_summer_h.gdx
+  61  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+  62  *;
+  63  *$GDXin   Input_summer_vh.gdx
+  64  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+  65  *;
+  66   
+  67  sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/96);
+  68  sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
+  69   
+  70  *in MW
+  71  PF_result(s,l,t) = (pl(l,t) + sum(b, Load_deviation(s,b,t) * PTDF_PBPK(l,b,t) *1000000))/1000000
   72  ;
-  73  Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (ukn(b,t)*0.95) - VL_result(s,b,t)*1000
-  74  ;
-  75  execute_unload "check.gdx";
+  73  *in kV
+  74  Vl(b,t) = (sqrt(uki(b,t)*uki(b,t) + ukr(b,t)*ukr(b,t)))/1000
+  75  ;
+  76  VL_result(s,b,t) = Vl(b,t) + sum(bb, Load_deviation(s,b,t) * (1000 *PTDF_UKPK(b,bb,t)))
+  77  ;
+  78  Line_Violation_test(s,l,t) = PF_result(s,l,t) - sLmax_scaled(l)
+  79  ;
+  80  Voltage_violation_up(s,b,t)$((VL_result(s,b,t)*1000 - ukn(b,t)*1.05) gt 0) = VL_result(s,b,t)*1000 - (ukn(b,t)*1.05)
+  81  ;
+  82  Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (ukn(b,t)*0.95) - VL_result(s,b,t)*1000
+  83  ;
+  84  execute_unload "Data.gdx"
+  85  ;
+  86  execute 'gdxxrw.exe Data.gdx o=PF_Data_w_lpv_10.xlsx par=PF_result'
+  87  ;
+  88  execute 'gdxxrw.exe Data.gdx o=VL_Data_w_lpv_10.xlsx par=VL_result'
 STOP C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 00:40:18 Page 2
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 10:09:59 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
@@ -88,19 +101,19 @@ Include File Summary
    SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
 
      1        1 INPUT          0       0  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
-     2       47 CALL           1      47  gdxxrw check.xlsx @TEP.txt
-     3       48 GDXIN          1      48  C:\Users\berne\IDiNA_Mote_Carlo\Complete\check.gdx
-     4       54 GDXIN          1      54  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter.gdx
-     5       76 STOP           1      76  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
+     2       47 CALL           1      47  gdxxrw Data.xlsx @TEP.txt
+     3       48 GDXIN          1      48  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data.gdx
+     4       54 GDXIN          1      54  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Input_winter_l.gdx
+     5       89 STOP           1      89  C:\Users\berne\IDiNA_Mote_Carlo\Complete\Data_preprocessing.gms
 
 
-COMPILATION TIME     =       11.282 SECONDS     17 MB  41.4.0 caab8bc0 WEX-WEI
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 00:40:18 Page 3
+COMPILATION TIME     =       11.266 SECONDS    116 MB  41.4.0 caab8bc0 WEX-WEI
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 01/25/23 10:09:59 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-EXECUTION TIME       =       10.875 SECONDS    342 MB  41.4.0 caab8bc0 WEX-WEI
+EXECUTION TIME       =       41.062 SECONDS    441 MB  41.4.0 caab8bc0 WEX-WEI
 
 
 USER: Small MUD - 5 User License                     S211124|0002AN-WIN

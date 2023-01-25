@@ -44,16 +44,25 @@ par=Load_deviation                 rng=sheet1!A1:CT33001                        
 $offecho
 ;
 $onUNDF
-$call   gdxxrw check.xlsx @TEP.txt
-$GDXin  check.gdx
+$call   gdxxrw Data.xlsx @TEP.txt
+$GDXin  Data.gdx
 $load   Load_deviation
 $GDXin
 $offUNDF
 
 
-$GDXin   Input_winter.gdx
+$GDXin   Input_winter_l.gdx
 $load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
 ;
+*$GDXin   Input_summer_l.gdx
+*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+*;
+*$GDXin   Input_summer_h.gdx
+*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+*;
+*$GDXin   Input_summer_vh.gdx
+*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+*;
 
 sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/96);
 sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
@@ -72,5 +81,9 @@ Voltage_violation_up(s,b,t)$((VL_result(s,b,t)*1000 - ukn(b,t)*1.05) gt 0) = VL_
 ;
 Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (ukn(b,t)*0.95) - VL_result(s,b,t)*1000
 ;
-execute_unload "check.gdx";
+execute_unload "Data.gdx"
+;
+execute 'gdxxrw.exe Data.gdx o=PF_Data_w_lpv_10.xlsx par=PF_result'
+;
+execute 'gdxxrw.exe Data.gdx o=VL_Data_w_lpv_10.xlsx par=VL_result'
 $stop
