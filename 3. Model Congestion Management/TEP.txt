@@ -1,0 +1,4 @@
+par=load_up                        rng=data!B16:H112                            rDim=1 cdim=1
+par=load_up_b                      rng=data!K16:M49                             rDim=1 cdim=1
+par=profil_01                      rng=nodal_demand_winter!A2:NTQ98             rDim=1 cdim=1
+par=profil_02                      rng=nodal_demand_winter!A102:ALM198          rDim=1 cdim=1                    

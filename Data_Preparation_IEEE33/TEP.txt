@@ -1,1 +1,0 @@
-par=Load_deviation                 rng=sheet1!A1:CT33001                            rDim=2 cdim=1                   
