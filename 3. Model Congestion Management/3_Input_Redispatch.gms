@@ -286,6 +286,8 @@ sLmax(l,t)
 sLmax_scaled(l)
 pl(l,t)
 PF_result(s,l,t)
+IN_PF_result_01(s,l,t)
+
 PTDF_PBPK(l,b,t)
 PTDF_PBQK(l,b,t)
 Line_Violation_test(s,l,t)
@@ -297,24 +299,33 @@ Vl(b,t)
 PTDF_UKPK(b,bb,t)
 PTDF_UKQK(b,bb,t)
 VL_result(s,b,t)
+IN_VL_result_01(s,b,t)
 Voltage_violation_up(s,b,t)
 Voltage_violation_lo(s,b,t)
 
 ;
-$onText
-$onecho > TEP.txt
-par=load_up                        rng=data!B16:H112                            rDim=1 cdim=1
-par=load_up_b                      rng=data!K16:M49                             rDim=1 cdim=1                 
+$onecho > PF.txt
+par=IN_PF_result_01                   rng=Tabelle1!A1:CT31001                      rDim=2 cdim=1                
 $offecho
-
 $onUNDF
-$call   gdxxrw data_case33.xlsx @TEP.txt
-$GDXin  data_case33.gdx
-$load   load_up, load_up_b
+$call   gdxxrw I=%winter%PF_Data_w_lpv_01.xlsx O=%winter%PF_Data_w_lpv_01.gdx @PF.txt
+$GDXin  %winter%PF_Data_w_lpv_01.gdx
+$load   IN_PF_result_01
 $GDXin
 $offUNDF
 ;
-$offtext
+$onecho > VL.txt
+par=IN_VL_result_01                        rng=Tabelle1!A1:CT33001                       rDim=2 cdim=1                 
+$offecho
+$onUNDF
+$call   gdxxrw I=%winter%VL_Data_w_lpv_01.xlsx O=%winter%VL_Data_w_lpv_01.gdx @VL.txt
+$GDXin  %winter%VL_Data_w_lpv_01.gdx
+$load   IN_VL_result_01
+$GDXin
+$offUndf
+;
+
+
 
 $GDXin   IEEE_spring_hpv.gdx
 $load    D_genP, pv_infeed, CF, load_bus_p

@@ -1,4 +1,7 @@
-Set
+*$set winter      winter/
+;
+
+Sets
    t                           / 1*96    /
    b        'network buses'    / 1*33    /
    l        'lines'            / 1*35   /
@@ -21,8 +24,8 @@ Scalar
 Alias (b,bb)
 ;
 $include 3_input_Redispatch.gms
-execute_unload "check.gdx";
-$stop
+*execute_unload "check.gdx";
+*$stop
 ;
 ************Redispatch****************************************
 Variables
@@ -192,11 +195,9 @@ loop(it,
 
 ***************************** variable loop input 
 
-$include 2_input_loop_EVPI.gms
-*execute_unload "check_loop.gdx";
-
+$include 3_input_loop_EVPI.gms
 execute_unload "check_loop.gdx";
-*$stop
+$stop
 ***************************** reactive variables bounds
 
 RD_Qg_pos.up(s,g,t) = 0.6;
