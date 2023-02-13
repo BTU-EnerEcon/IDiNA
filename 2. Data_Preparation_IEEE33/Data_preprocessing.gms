@@ -51,22 +51,18 @@ $GDXin
 $offUNDF
 
 
-$GDXin   AC_IEEE_Spring_hpv.gdx
-$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-;
-*$GDXin   AC_IEEE_Summer_hpv.gdx
-*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-
-*$GDXin   AC_IEEE_Fall_hpv.gdx
-*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-
-*$GDXin   AC_IEEE_Winter_hpv.gdx
-*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-
-
-*$GDXin   Input_winter_l.gdx
+*$GDXin   AC_IEEE_Spring_hpv.gdx
 *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
 *;
+*$GDXin   AC_IEEE_Summer_hpv.gdx
+*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+*;
+*$GDXin   AC_IEEE_Fall_hpv.gdx
+*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+*;
+$GDXin   AC_IEEE_Winter_hpv.gdx
+$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+;
 
 
 sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/96);
@@ -88,7 +84,7 @@ Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (uk
 ;
 execute_unload "Data.gdx"
 ;
-execute 'gdxxrw.exe Data.gdx o=PF_Data_w_lpv_10.xlsx par=PF_result'
+execute 'gdxxrw.exe Data.gdx o=PF_Data_w_hpv_10.xlsx par=PF_result'
 ;
-execute 'gdxxrw.exe Data.gdx o=VL_Data_w_lpv_10.xlsx par=VL_result'
+execute 'gdxxrw.exe Data.gdx o=VL_Data_w_hpv_10.xlsx par=VL_result'
 $stop

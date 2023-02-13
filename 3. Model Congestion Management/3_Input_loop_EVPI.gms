@@ -15,74 +15,77 @@ $ontext
 elseif ord(it) eq 2,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_02(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
-$ontext     
+PF_result(s,l,t) = IN_PF_result_02(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_02(s,b,t)
+;
+    
 elseif ord(it) eq 3,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_03(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
-    
+PF_result(s,l,t) = IN_PF_result_03(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_03(s,b,t)
+;
+
 elseif ord(it) eq 4,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_04(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
+PF_result(s,l,t) = IN_PF_result_04(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_04(s,b,t)
+;
+
     
 elseif ord(it) eq 5,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_05(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
+PF_result(s,l,t) = IN_PF_result_05(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_05(s,b,t)
+;
+
             
 elseif ord(it) eq 6,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_06(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
-    
+PF_result(s,l,t) = IN_PF_result_06(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_06(s,b,t)
+;
+
 elseif ord(it) eq 7,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_07(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
-    
+PF_result(s,l,t) = IN_PF_result_07(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_07(s,b,t)
+;
+
 elseif ord(it) eq 8,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_08(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
-    
+PF_result(s,l,t) = IN_PF_result_08(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_08(s,b,t)
+;
+
 elseif ord(it) eq 9,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_09(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
-              
+PF_result(s,l,t) = IN_PF_result_09(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_09(s,b,t)
+;
+        
 elseif ord(it) eq 10,
      
 
-    Load_bus_t(b,s,t) = Load_bus(b) * profil_10(t,s)
-    ;
-    Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
-    ;
+PF_result(s,l,t) = IN_PF_result_10(s,l,t)
+;
+VL_result(s,b,t)= IN_VL_result_10(s,b,t)
+;
+
 $offtext              
 )
 ;

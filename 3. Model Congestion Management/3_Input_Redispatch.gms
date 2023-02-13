@@ -287,6 +287,27 @@ sLmax_scaled(l)
 pl(l,t)
 PF_result(s,l,t)
 IN_PF_result_01(s,l,t)
+IN_PF_result_02(s,l,t)
+IN_PF_result_03(s,l,t)
+IN_PF_result_04(s,l,t)
+IN_PF_result_05(s,l,t)
+IN_PF_result_06(s,l,t)
+IN_PF_result_07(s,l,t)
+IN_PF_result_08(s,l,t)
+IN_PF_result_09(s,l,t)
+IN_PF_result_10(s,l,t)
+
+IN_PF_max_01(s,l,t)
+IN_PF_max_02(s,l,t)
+IN_PF_max_03(s,l,t)
+IN_PF_max_04(s,l,t)
+IN_PF_max_05(s,l,t)
+IN_PF_max_06(s,l,t)
+IN_PF_max_07(s,l,t)
+IN_PF_max_08(s,l,t)
+IN_PF_max_09(s,l,t)
+IN_PF_max_10(s,l,t)
+
 
 PTDF_PBPK(l,b,t)
 PTDF_PBQK(l,b,t)
@@ -300,27 +321,69 @@ PTDF_UKPK(b,bb,t)
 PTDF_UKQK(b,bb,t)
 VL_result(s,b,t)
 IN_VL_result_01(s,b,t)
+IN_VL_result_02(s,b,t)
+IN_VL_result_03(s,b,t)
+IN_VL_result_04(s,b,t)
+IN_VL_result_05(s,b,t)
+IN_VL_result_06(s,b,t)
+IN_VL_result_07(s,b,t)
+IN_VL_result_08(s,b,t)
+IN_VL_result_09(s,b,t)
+IN_VL_result_10(s,b,t)
+
+IN_VL_max_01(s,b,t)
+IN_VL_max_02(s,b,t)
+IN_VL_max_03(s,b,t)
+IN_VL_max_04(s,b,t)
+IN_VL_max_05(s,b,t)
+IN_VL_max_06(s,b,t)
+IN_VL_max_07(s,b,t)
+IN_VL_max_08(s,b,t)
+IN_VL_max_09(s,b,t)
+IN_VL_max_10(s,b,t)
+
+
 Voltage_violation_up(s,b,t)
 Voltage_violation_lo(s,b,t)
 
 ;
 $onecho > PF.txt
-par=IN_PF_result_01                   rng=Tabelle1!A1:CT31001                      rDim=2 cdim=1                
+par=IN_PF_result_01                   rng=Tabelle1!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_02                   rng=Tabelle2!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_03                   rng=Tabelle3!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_04                   rng=Tabelle4!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_05                   rng=Tabelle5!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_06                   rng=Tabelle6!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_07                   rng=Tabelle7!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_08                   rng=Tabelle8!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_09                   rng=Tabelle9!A1:CT31001                      rDim=2 cdim=1
+par=IN_PF_result_10                   rng=Tabelle10!A1:CT31001                     rDim=2 cdim=1                  
 $offecho
 $onUNDF
 $call   gdxxrw I=%winter%PF_Data_w_lpv_01.xlsx O=%winter%PF_Data_w_lpv_01.gdx @PF.txt
 $GDXin  %winter%PF_Data_w_lpv_01.gdx
-$load   IN_PF_result_01
+$load   IN_PF_result_01, IN_PF_result_02,  IN_PF_result_03,  IN_PF_result_04,  IN_PF_result_05
+$load   IN_PF_result_06, IN_PF_result_07,  IN_PF_result_08,  IN_PF_result_09,  IN_PF_result_10
 $GDXin
 $offUNDF
 ;
 $onecho > VL.txt
-par=IN_VL_result_01                        rng=Tabelle1!A1:CT33001                       rDim=2 cdim=1                 
+par=IN_VL_result_01                        rng=Tabelle1!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_02                        rng=Tabelle2!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_03                        rng=Tabelle3!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_04                        rng=Tabelle4!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_05                        rng=Tabelle5!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_06                        rng=Tabelle6!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_07                        rng=Tabelle7!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_08                        rng=Tabelle8!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_09                        rng=Tabelle9!A1:CT33001                       rDim=2 cdim=1
+par=IN_VL_result_10                        rng=Tabelle10!A1:CT33001                       rDim=2 cdim=1              
 $offecho
 $onUNDF
 $call   gdxxrw I=%winter%VL_Data_w_lpv_01.xlsx O=%winter%VL_Data_w_lpv_01.gdx @VL.txt
 $GDXin  %winter%VL_Data_w_lpv_01.gdx
-$load   IN_VL_result_01
+$load   IN_VL_result_01, IN_VL_result_02, IN_VL_result_03, IN_VL_result_04, IN_VL_result_05
+$load   IN_VL_result_06, IN_VL_result_07, IN_VL_result_08, IN_VL_result_09, IN_VL_result_10 
 $GDXin
 $offUndf
 ;
