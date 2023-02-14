@@ -377,7 +377,7 @@ par=IN_VL_result_06                        rng=Tabelle6!A1:CT33001              
 par=IN_VL_result_07                        rng=Tabelle7!A1:CT33001                       rDim=2 cdim=1
 par=IN_VL_result_08                        rng=Tabelle8!A1:CT33001                       rDim=2 cdim=1
 par=IN_VL_result_09                        rng=Tabelle9!A1:CT33001                       rDim=2 cdim=1
-par=IN_VL_result_10                        rng=Tabelle10!A1:CT33001                       rDim=2 cdim=1              
+par=IN_VL_result_10                        rng=Tabelle10!A1:CT33001                      rDim=2 cdim=1              
 $offecho
 $onUNDF
 $call   gdxxrw I=%winter%VL_Data_w_lpv_01.xlsx O=%winter%VL_Data_w_lpv_01.gdx @VL.txt
