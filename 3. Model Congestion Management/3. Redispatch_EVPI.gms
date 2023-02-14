@@ -1,4 +1,13 @@
-*$set winter      winter/
+$setglobal    on_spring       if "*" spring input is readed, else ""
+$setglobal    on_summer       if "" summer input is readed, else ""
+$setglobal    on_fall         if "" fall input is readed, else ""
+$setglobal    on_winter       if "" winter input is readed, else ""
+
+;
+$set spring      spring/
+$set summer      summer/
+$set fall        fall/
+$set winter      winter/
 ;
 
 Sets
@@ -23,7 +32,7 @@ Scalar
 
 Alias (b,bb)
 ;
-$include 3_input_Redispatch.gms
+$include 3_input_setup_EVPI.gms
 *execute_unload "check.gdx";
 *$stop
 ;

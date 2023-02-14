@@ -1,3 +1,14 @@
+$setglobal    on_spring       if "*" spring input is readed, else ""
+$setglobal    on_summer       if "" summer input is readed, else ""
+$setglobal    on_fall         if "" fall input is readed, else ""
+$setglobal    on_winter       if "" winter input is readed, else ""
+
+;
+$set spring      spring/
+$set summer      summer/
+$set fall        fall/
+$set winter      winter/
+
 Set
    t                           / 1*96    /
    b        'network buses'    / 1*33    /
@@ -20,7 +31,7 @@ Scalar
 
 Alias (b,bb)
 ;
-$include 3_input_redispatch.gms
+$include 3_input_setup_worst.gms
 execute_unload "check.gdx";
 $stop
 ;

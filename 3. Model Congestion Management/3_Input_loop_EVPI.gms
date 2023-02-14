@@ -6,84 +6,84 @@ sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
    
 if(ord(it) eq 1,  
      
-PF_result(s,l,t) = IN_PF_result_01(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_01(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_01(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_01(s,b,t)
 ;
 
 $ontext 
 elseif ord(it) eq 2,
      
 
-PF_result(s,l,t) = IN_PF_result_02(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_02(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_02(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_02(s,b,t)
 ;
     
 elseif ord(it) eq 3,
      
 
-PF_result(s,l,t) = IN_PF_result_03(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_03(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_03(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_03(s,b,t)
 ;
 
 elseif ord(it) eq 4,
      
 
-PF_result(s,l,t) = IN_PF_result_04(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_04(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_04(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_04(s,b,t)
 ;
 
     
 elseif ord(it) eq 5,
      
 
-PF_result(s,l,t) = IN_PF_result_05(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_05(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_05(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_05(s,b,t)
 ;
 
             
 elseif ord(it) eq 6,
      
 
-PF_result(s,l,t) = IN_PF_result_06(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_06(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_06(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_06(s,b,t)
 ;
 
 elseif ord(it) eq 7,
      
 
-PF_result(s,l,t) = IN_PF_result_07(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_07(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_07(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_07(s,b,t)
 ;
 
 elseif ord(it) eq 8,
      
 
-PF_result(s,l,t) = IN_PF_result_08(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_08(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_08(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_08(s,b,t)
 ;
 
 elseif ord(it) eq 9,
      
 
-PF_result(s,l,t) = IN_PF_result_09(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_09(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_09(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_09(s,b,t)
 ;
         
 elseif ord(it) eq 10,
      
 
-PF_result(s,l,t) = IN_PF_result_10(s,l,t)
+PF_result(s,l,t) = IN_PF_EVPI_10(s,l,t)
 ;
-VL_result(s,b,t)= IN_VL_result_10(s,b,t)
+VL_result(s,b,t)= IN_VL_EVPI_10(s,b,t)
 ;
 
 $offtext              
