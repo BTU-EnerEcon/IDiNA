@@ -1,1 +1,0 @@
-par=IN_PF_result_01                   rng=Tabelle1!A1:CT31001                      rDim=2 cdim=1                

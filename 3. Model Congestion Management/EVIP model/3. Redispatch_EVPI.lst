@@ -1,0 +1,692 @@
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 02/13/23 12:11:58 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   2  ;
+   3   
+   4  Sets
+   5     t                           / 1*96    /
+   6     b        'network buses'    / 1*33    /
+   7     l        'lines'            / 1*35   /
+   8     g        'dispatchable generating units' / 1*5   /
+   9     p        'solar photovoltaik generators' /1*4  /
+  10     s        'scenarios'        / s1*s300/
+  11     slack(b)                    / 1       /
+  12     Map_G(b,g)/1.1, 18.2, 22.3, 25.4,33.5/
+  13     Map_PV(b,p) /18.1, 22.2, 25.3, 33.4/
+  14   
+  15    it /1/
+  16   
+  17  ;
+  18  Scalar
+  19     Sbase /   100 /
+  20     VOLL  / 10000 /
+  21     VOLW  /    50 /
+  22     Line_cap_scale /0/;
+  23   
+  24  Alias (b,bb)
+  25  ;
+INCLUDE    C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3_input_Redispatch.gms
+  27   
+  28   
+  29  parameter Qd(b)  *MVAR
+  30  /
+  31  1  0
+  32  2  0.06
+  33  3  0.04
+  34  4  0.08
+  35  5  0.03
+  36  6  0.02
+  37  7  0.1
+  38  8  0.1
+  39  9  0.02
+  40  10 0.02
+  41  11 0.03
+  42  12 0.035
+  43  13 0.035
+  44  14 0.08
+  45  15 0.01
+  46  16 0.02
+  47  17 0.02
+  48  18 0.04
+  49  19 0.04
+  50  20 0.04
+  51  21 0.04
+  52  22 0.04
+  53  23 0.05
+  54  24 0.2
+  55  25 0.2
+  56  26 0.025
+  57  27 0.025
+  58  28 0.02
+  59  29 0.07
+  60  30 0.6
+  61  31 0.07
+  62  32 0.1
+  63  33 0.04
+  64  /;
+  65   
+  66   
+  67   
+  68   
+      Table MP_DH(t,*)
+          price            
+      1   25.02
+      2   18.29
+      3   16.04
+      4   14.60
+      5   14.95
+      6   14.50
+      7   10.76
+      8   12.01
+      9   12.39
+      10  14.04
+      11  14.68
+      12  16.08
+      13  16.08
+      14  16.05
+      15  16.04
+      16  16.10
+      17  23.93
+      18  26.90
+      19  26.36
+      20  23.98
+      21  16.09
+      22  14.08
+      23  12.44
+      24  0.04
+      25  -12.11
+      26  -19.63
+      27  -19.37
+      28  -31.41
+      29  -46.97
+      30  -13.48
+      31  0.08
+      32  10.06
+      33  14.25
+      34  14.56
+      35  14.64
+      36  15.08
+      37  15.41
+      38  14.52
+      39  14.70
+      40  14.66
+      41  16.09
+      42  25.10
+      43  25.06
+      44  19.08
+      45  14.26
+      46  12.22
+      47  10.40
+      48  -0.33
+      49  -0.08
+      50  -0.07
+      51  -5.03
+      52  0.01
+      53  -0.04
+      54  0.03
+      55  -8.67
+      56  4.46
+      57  9.90
+      58  14.29
+      59  16.73
+      60  22.31
+      61  23.03
+      62  22.40
+      63  27.07
+      64  29.33
+      65  33.85
+      66  45.96
+      67  49.82
+      68  47.62
+      69  35.98
+      70  27.26
+      71  27.70
+      72  14.27
+      73  9.32
+      74  0.02
+      75  -0.04
+      76  0.01
+      77  0.00
+      78  -0.01
+      79  -3.18
+      80  -0.05
+      81  0.05
+      82  9.62
+      83  11.54
+      84  14.68
+      85  14.31
+      86  11.18
+      87  12.01
+      88  14.36
+      89  17.55
+      90  28.94
+      91  29.59
+      92  29.42
+      93  28.92
+      94  28.66
+      95  29.74
+      96  24.90
+      ;
+ 170  Table MP_DH(t,*)
+ 171      price
+ 172  1   25.02
+ 173  2   18.29
+ 174  3   16.04
+ 175  4   14.60
+ 176  5   14.95
+ 177  6   14.50
+ 178  7   10.76
+ 179  8   12.01
+ 180  9   12.39
+ 181  10  14.04
+ 182  11  14.68
+ 183  12  16.08
+ 184  13  16.08
+ 185  14  16.05
+ 186  15  16.04
+ 187  16  16.10
+ 188  17  23.93
+ 189  18  26.90
+ 190  19  26.36
+ 191  20  23.98
+ 192  21  16.09
+ 193  22  14.08
+ 194  23  12.44
+ 195  24  10.23
+ 196  25  14.25
+ 197  26  14.56
+ 198  27  15.41
+ 199  28  12.22
+ 200  29  16.09
+ 201  30  26.90
+ 202  31  14.25
+ 203  32  10.06
+ 204  33  14.25
+ 205  34  14.56
+ 206  35  14.64
+ 207  36  15.08
+ 208  37  15.41
+ 209  38  14.52
+ 210  39  14.70
+ 211  40  14.66
+ 212  41  16.09
+ 213  42  25.10
+ 214  43  25.06
+ 215  44  19.08
+ 216  45  14.26
+ 217  46  12.22
+ 218  47  10.40
+ 219  48  9.32
+ 220  49  16.73
+ 221  50  16.73
+ 222  51  16.73
+ 223  52  16.73
+ 224  53  16.73
+ 225  54  16.73
+ 226  55  16.73
+ 227  56  4.46
+ 228  57  9.90
+ 229  58  14.29
+ 230  59  16.73
+ 231  60  22.31
+ 232  61  23.03
+ 233  62  22.40
+ 234  63  27.07
+ 235  64  29.33
+ 236  65  33.85
+ 237  66  45.96
+ 238  67  49.82
+ 239  68  47.62
+ 240  69  35.98
+ 241  70  27.26
+ 242  71  27.70
+ 243  72  14.27
+ 244  73  9.32
+ 245  74  11.54
+ 246  75  11.54
+ 247  76  11.54
+ 248  77  11.54
+ 249  78  11.54
+ 250  79  11.54
+ 251  80  11.54
+ 252  81  11.54
+ 253  82  9.62
+ 254  83  11.54
+ 255  84  14.68
+ 256  85  14.31
+ 257  86  11.18
+ 258  87  12.01
+ 259  88  14.36
+ 260  89  17.55
+ 261  90  28.94
+ 262  91  29.59
+ 263  92  29.42
+ 264  93  28.92
+ 265  94  28.66
+ 266  95  29.74
+ 267  96  24.90
+ 268  ;
+ 269  Table GenD(g,*) 'generating units characteristics'
+ 270   
+ 271      pmax    pmin    Qmax    Qmin   var
+ 272  1     4       0      2.5     -2.5   12
+ 273  2    0.2      0       0      0      10.26
+ 274  3    0.2      0       0      0      10.26
+ 275  4    0.2      0       0      0      10.26
+ 276  5    0.2      0       0      0      10.26
+ 277   
+ 278  ;
+ 279   
+ 280  Table GenPV(p,*) 'generating units characteristics'
+ 281        pmax
+ 282  1    0.2
+ 283  2    0.2
+ 284  3    0.2
+ 285  4    0.2
+ 286  ;
+ 287   
+ 288   
+ 289  Parameter
+ 290  load_up
+ 291   
+ 292  load_up_b
+ 293  load_p(t)
+ 294  load_q(t)
+ 295  CF(t)
+ 296   
+ 297  profil(t)
+ 298   
+ 299  BP(b)
+ 300  BQ(b)
+ 301  D_genP(g,t)
+ 302  pv_infeed(b,t)
+ 303   
+ 304  Load_bus_p(b,t)
+ 305  load_bus_t(b,s,t)
+ 306   
+ 307  Load_bus_q(b,t)
+ 308  Load_deviation(b,s,t)
+ 309   
+ 310  sl(l,t)
+ 311  sLmax(l,t)
+ 312  sLmax_scaled(l)
+ 313  pl(l,t)
+ 314  PF_result(s,l,t)
+ 315  IN_PF_result_01(s,l,t)
+ 316   
+ 317  PTDF_PBPK(l,b,t)
+ 318  PTDF_PBQK(l,b,t)
+ 319  Line_Violation_test(s,l,t)
+ 320   
+ 321  uki(b,t)
+ 322  ukr(b,t)
+ 323  ukn(b,t)
+ 324  Vl(b,t)
+ 325  PTDF_UKPK(b,bb,t)
+ 326  PTDF_UKQK(b,bb,t)
+ 327  VL_result(s,b,t)
+ 328  IN_VL_result_01(s,b,t)
+ 329  Voltage_violation_up(s,b,t)
+ 330  Voltage_violation_lo(s,b,t)
+ 331   
+ 332  ;
+GDXIN   C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\winter\PF_Data_w_lpv_01.gdx
+--- LOAD  IN_PF_result_01 = 1:IN_PF_result_01
+ 342  ;
+GDXIN   C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\winter\VL_Data_w_lpv_01.gdx
+--- LOAD  IN_VL_result_01 = 1:IN_VL_result_01
+ 352  ;
+ 353   
+ 354   
+ 355   
+GDXIN   C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\IEEE_spring_hpv.gdx
+--- LOAD  D_genP = 43:D_genP
+--- LOAD  pv_infeed = 44:pv_infeed
+--- LOAD  CF = 20:CF
+--- LOAD  Load_bus_p = 24:Load_bus_p
+ 358   
+ 359  *$GDXin   IEEE_summer_hpv.gdx
+ 360  *$load    D_genP, pv_infeed, CF, load_up, load_up_b
+ 361   
+ 362  *$GDXin   IEEE_fall_hpv.gdx
+ 363  *$load    D_genP, pv_infeed, CF, load_up, load_up_b
+ 364   
+ 365  *$GDXin   IEEE_winter_hpv.gdx
+ 366  *$load    D_genP, pv_infeed, CF, load_up, load_up_b
+ 367   
+ 368   
+GDXIN   C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\AC_IEEE_spring_hpv.gdx
+--- LOAD  pl = 8:pL
+--- LOAD  sLmax = 12:sLmax
+--- LOAD  uki = 3:uKi
+--- LOAD  ukr = 2:uKr
+--- LOAD  ukn = 11:uKn
+--- LOAD  PTDF_PBPK = 4:PTDF_PBPK
+--- LOAD  PTDF_PBQK = 5:PTDF_PBQK
+--- LOAD  PTDF_UKPK = 6:PTDF_UKPK
+--- LOAD  PTDF_UKQK = 7:PTDF_UKQK
+ 371   
+ 372  *$GDXin   AC_IEEE_spring_hpv.gdx
+ 373  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+ 374   
+ 375  *$GDXin   AC_IEEE_spring_hpv.gdx
+ 376  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+ 377   
+ 378  *$GDXin   AC_IEEE_spring_hpv.gdx
+ 379  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+ 380   
+ 381   
+ 382   
+ 383  *Load_bus(b) = load_up_b(b,'Active Demand')
+ 384  *;
+ 385   
+ 386   
+ 387  *execute_unload "check.gdx";
+ 388  *$stop
+ 389  ;
+ 390  ************Redispatch****************************************
+ 391  Variables
+ 392  RD_OF                 objective funktion value to be minimized (total costs)
+ 393  adjust_Pij(s,l,t)     Wirkleistungs powerflow (current in A)  = Total Voltage : total impedance
+ 394   
+ 395  *RD_Va(b,t)         Voltage angle of bus i at time t (rad)
+ 396  *RD_V(s,b,t)          Voltage magnitude in bus i at time t (pu)
+ 397  *RD_Pw(b,t)         Active power generated by wind turbine connected to bus i at time t (MW). Wirkleistungserzeugung thermisch
+ 398   
+ 399  ;
+ 400   
+ 401  positive variables
+ 402  *RD_Pg(g,t)              Resulting active power generation
+ 403  RD_Pg_up(s,g,t)           Active power increase due to redispatch by thermal unit g connected to bus i at time t (MW). Wirkleistungserzeugung thermisch
+ 404  RD_Pg_down(s,g,t)         Active power decrease due to redispatch by thermal unit g connected to bus i at time t (MW). Wirkleistungserzeugung thermisch
+ 405  RD_dem_resp_down(s,b,t)   positive active power Demand response (reduction of load)
+ 406  RD_dem_resp_up(s,b,t)     negative active power Demand response (increase of of load)
+ 407   
+ 408  RD_Qg_pos(s,g,t)           Resulting positive reactive power redispatch from conventional generators
+ 409  RD_Qg_neg(s,g,t)           Resulting negative reactive power redispatch from conventional generators
+ 410  RD_Qpv_pos(s,p,t)          Resulting positive reactive power redispatch from PV plants
+ 411  RD_Qpv_neg(s,p,t)          Resulting positive reactive power redispatch from PV plants
+ 412   
+ 413  violation(s,l,t)
+ 414   
+ 415  adjust_v(s,b,t)
+ 416   
+ 417  *RD_Qg_up(g,t)     Reactive power increase due to redispatch by thermal unit g connected to bus i at time t (MW). Blindleistungserzeugung thermisch
+ 418  *RD_Qg_down(g,t)   Reactive power decrease due to redispatch by thermal unit g connected to bus i at time t (MW). Blindleistungserzeugung thermisch
+ 419  RD_curtail(s,b,t)
+ 420  RD_LS(s,b,t)
+ 421  ;
+ 422   
+ 423  Equation
+ 424  RD_eq1,
+ 425  RD_eq2a, RD_eq2b
+ 426  RD_eq3,
+ 427  RD_eq4,
+ 428  RD_eq5,
+ 429  RD_eq6,
+ 430  RD_eq7,
+ 431  RD_eq8,
+ 432  RD_eq9,
+ 433  RD_eq10,
+ 434  RD_eq11,
+ 435  RD_eq12
+ 436  ;
+ 437   
+ 438  *#########################################Redispatch###################################################
+ 439   
+ 440   
+ 441  RD_eq1(s)..                          RD_OF  =e=
+ 442   
+ 443                                      + sum((g,t), RD_Pg_up(s,g,t)  * GenD(g,'var'))
+ 444                                      + sum((g,t), (RD_Pg_down(s,g,t) ) * (MP_DH(t,'price') - GenD(g,'var')/2))
+ 445   
+ 446                                      + sum((g,t), RD_Qg_pos(s,g,t) * MP_DH(t,'price'))
+ 447                                      + sum((g,t), RD_Qg_neg(s,g,t) * MP_DH(t,'price'))
+ 448                                      + sum((p,t), RD_Qpv_pos(s,p,t) * MP_DH(t,'price'))
+ 449                                      + sum((p,t), RD_Qpv_neg(s,p,t) * MP_DH(t,'price'))
+ 450   
+ 451                                      + sum((b,t), RD_dem_resp_down(s,b,t) * (MP_DH(t,'price')))
+ 452                                      + sum((b,t), RD_dem_resp_up(s,b,t) * MP_DH(t,'price'))
+ 453                                      + sum((b,t), RD_curtail(s,b,t) * MP_DH(t,'price'))
+ 454   
+ 455                                      + sum((l,t), violation(s,l,t) * 100000000)
+ 456  ;
+ 457   
+ 458  *adjusted wirkleistungs powerflow from i to j on line l due to congestion management actions
+ 459   
+ 460  RD_eq2a(s,l,t)..                     adjust_Pij(s,l,t)  =e= PF_result(s,l,t)
+ 461                                      + sum((b),  ((-1) * PTDF_PBPK(l,b,t)) * (sum(g$Map_G(b,g), RD_Pg_up(s,g,t) - RD_Pg_down(s,g,t)) - RD_curtail(s,b,t)
+ 462                                      -  RD_dem_resp_down(s,b,t) + RD_dem_resp_up(s,b,t))
+ 463                                      )
+ 464                                      + sum((b),  ((-1) * PTDF_PBQK(l,b,t)) * (sum(g$Map_G(b,g), RD_Qg_pos(s,g,t) - RD_Qg_neg(s,g,t))  +  sum(p$Map_PV(b,p), RD_Qpv_pos(s,p,t) - RD_Qpv_neg(s,p,t))))
+ 465   
+ 466  ;
+ 467   
+ 468   
+ 469  *adjusted voltage level at node i due to congestion management actions
+ 470   
+ 471  RD_eq2b(s,bb,t)..                    adjust_v(s,bb,t)  =e= VL_result(s,bb,t)
+ 472                                      + sum(b, ((-1) * PTDF_UKPK(b,bb,t)*1000) * (sum(g$Map_G(b,g), RD_Pg_up(s,g,t) - RD_Pg_down(s,g,t)) - RD_curtail(s,b,t)
+ 473                                      -  RD_dem_resp_down(s,b,t) + RD_dem_resp_up(s,b,t))
+ 474                                      )
+ 475                                      + sum(b, ((-1) * PTDF_UKQK(b,bb,t)*1000) * (sum(g$Map_G(b,g), RD_Qg_pos(s,g,t) - RD_Qg_neg(s,g,t))  +  sum(p$Map_PV(b,p), RD_Qpv_pos(s,p,t) - RD_Qpv_neg(s,p,t))))
+ 476   
+ 477  ;
+ 478   
+ 479   
+ 480  *Thermal power flow limitations of lines (current in A)
+ 481  RD_eq3(s,l,t)..                       adjust_Pij(s,l,t)  =l= (sLmax_scaled(l)  + sLmax_scaled(l) * Line_cap_scale) + violation(s,l,t)
+ 482  ;
+ 483   
+ 484  RD_eq4(s,l,t)..                       adjust_Pij(s,l,t)  =g= - (sLmax_scaled(l)  + sLmax_scaled(l) * Line_cap_scale) + ( - violation(s,l,t))
+ 485  ;
+ 486   
+ 487  *Volatage level limitations of lines in kV
+ 488   
+ 489  RD_eq5(s,b,t)..                       adjust_v(s,b,t)*1000  =l= ukn(b,t)*1.05
+ 490  ;
+ 491   
+ 492  RD_eq6(s,b,t)..                       adjust_v(s,b,t)*1000  =g= ukn(b,t)*0.95
+ 493  ;
+ 494   
+ 495  * active Redispatch positive active demand response constraint
+ 496   
+ 497  RD_eq7(s,b,t)..                       RD_dem_resp_down(s,b,t) =l= Load_bus_t(b,s,t)
+ 498  ;
+ 499   
+ 500  * active Redispatch negative demand response constraint
+ 501   
+ 502  RD_eq8(s,b,t)..                       RD_dem_resp_up(s,b,t) =l= Load_bus_t(b,s,t) * 0.5
+ 503  ;
+ 504  * active Redispatch Ramping up constraint
+ 505   
+ 506  RD_eq9(s,g,t)..                         RD_Pg_up(s,g,t)   =l= GenD(g,'pmax') - D_genP(g,t)
+ 507  ;
+ 508   
+ 509  * active Redispatch Ramping down constraint 2
+ 510   
+ 511  RD_eq10(s,g,t)..                        RD_Pg_down(s,g,t) =l= D_genP(g,t)
+ 512  ;
+ 513   
+ 514  * active Redispatch Curtailment
+ 515   
+ 516  RD_eq11(s,b,t)..                        RD_curtail(s,b,t) =l= pv_infeed(b,t)
+ 517  ;
+ 518   
+ 519   
+ 520  RD_eq12(s)..                           0 =e=  sum((b,t), RD_dem_resp_down(s,b,t) + RD_dem_resp_up(s,b,t))
+ 521  ;
+ 522  *###############################Model definition############################################
+ 523  **********************************************************
+ 524   
+ 525   
+ 526  Model Redispatch / RD_eq1, RD_eq2a, RD_eq2b, RD_eq3, RD_eq4, RD_eq5, RD_eq6, RD_eq7, RD_eq8, RD_eq9, RD_eq10, RD_eq11/ ;
+ 527   
+ 528  *only thermal CM  RD_eq1, RD_eq2a,  RD_eq3, RD_eq4,  RD_eq7, RD_eq8, RD_eq9, RD_eq10, RD_eq11
+ 529  *only voltage CM  RD_eq1, RD_eq2b,  RD_eq5, RD_eq6,  RD_eq7, RD_eq8, RD_eq9, RD_eq10, RD_eq11
+ 530  *complete CM      RD_eq1, RD_eq2a, RD_eq2b, RD_eq3, RD_eq4, RD_eq5, RD_eq6, RD_eq7, RD_eq8, RD_eq9, RD_eq10, RD_eq11
+ 531   
+ 532   
+ 533  *****************************output parameter declaration
+ 534  Parameter
+ 535  report(t,g,*)
+ 536  D_injection(b,t)
+ 537  D_draw(b,t)
+ 538  D_saldo(b,t)
+ 539  report3(g,t)
+ 540  report4(g,t)
+ 541  lmp(b,t)
+ 542  report_violation(s,l,t)
+ 543  Report_curtail(s,b,t)
+ 544  Report_PG_up(s,g,t)
+ 545  Report_PG_down(s,g,t)
+ 546  Report_dem_resp_down(s,b,t)
+ 547  Report_dem_resp_up(s,b,t)
+ 548  Report_RD_costs(s)
+ 549  Uncertain_line_flow(l,t)
+ 550  ;
+ 551  option threads =  -10
+ 552  ;
+ 553  *****************************looping
+ 554  loop(it,
+ 555   
+ 556  ***************************** variable loop input
+ 557   
+INCLUDE    C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3_input_loop_EVPI.gms
+ 559   
+ 560   
+ 561   
+ 562  sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/96);
+ 563  sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
+ 564   
+ 565  if(ord(it) eq 1,
+ 566   
+ 567  PF_result(s,l,t) = IN_PF_result_01(s,l,t)
+ 568  ;
+ 569  VL_result(s,b,t)= IN_VL_result_01(s,b,t)
+ 570  ;
+ 571   
+      elseif ord(it) eq 2,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_02(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+      $ontext     
+      elseif ord(it) eq 3,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_03(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+          
+      elseif ord(it) eq 4,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_04(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+          
+      elseif ord(it) eq 5,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_05(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+                  
+      elseif ord(it) eq 6,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_06(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+          
+      elseif ord(it) eq 7,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_07(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+          
+      elseif ord(it) eq 8,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_08(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+          
+      elseif ord(it) eq 9,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_09(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+                    
+      elseif ord(it) eq 10,
+           
+       
+          Load_bus_t(b,s,t) = Load_bus(b) * profil_10(t,s)
+          ;
+          Load_deviation(b,s,t) = Load_bus_t(b,s,t) - Load_bus_ref_t(b,t)
+          ;
+ 645  )
+ 646  ;
+ 647   
+ 648   
+ 649  *in kV
+ 650  Vl(b,t) = (sqrt(uki(b,t)*uki(b,t) + ukr(b,t)*ukr(b,t)))/1000
+ 651  ;
+ 652  Line_Violation_test(s,l,t) = PF_result(s,l,t) - sLmax_scaled(l)
+ 653  ;
+ 654  Voltage_violation_up(s,b,t)$((VL_result(s,b,t)*1000 - ukn(b,t)*1.05) gt 0) = VL_result(s,b,t)*1000 - (ukn(b,t)*1.05)
+ 655  ;
+ 656  Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (ukn(b,t)*0.95) - VL_result(s,b,t)*1000
+ 657  ;
+ 658  execute_unload "check_loop.gdx";
+STOP C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3. Redispatch_EVPI.gms
+****  $767,299  UNEXPECTED END OF FILE (1)
+
+**** 2 ERROR(S)   0 WARNING(S)
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 02/13/23 12:11:58 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3. Redispatch_EVPI.gms
+     2       26 INCLUDE        1      26  .C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3_input_Redispatch.gms
+     3      337 CALL           2     311  .gdxxrw I=winter/PF_Data_w_lpv_01.xlsx O=winter/PF_Data_w_lpv_01.gdx @PF.txt
+     4      338 GDXIN          2     312  .C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\winter\PF_Data_w_lpv_01.gdx
+     5      347 CALL           2     321  .gdxxrw I=winter/VL_Data_w_lpv_01.xlsx O=winter/VL_Data_w_lpv_01.gdx @VL.txt
+     6      348 GDXIN          2     322  .C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\winter\VL_Data_w_lpv_01.gdx
+     7      356 GDXIN          2     330  .C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\IEEE_spring_hpv.gdx
+     8      369 GDXIN          2     343  .C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\AC_IEEE_spring_hpv.gdx
+     9      558 INCLUDE        1     198  .C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3_input_loop_EVPI.gms
+    10      659 STOP           1     200  C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3. Redispatch_EVPI.gms
+
+
+COMPILATION TIME     =       17.125 SECONDS     77 MB  41.4.0 caab8bc0 WEX-WEI
+
+
+USER: Small MUD - 5 User License                     S221110|0002AN-WIN
+      BTU Cottbus-Senftenberg, FG Energiewirtschaft              DC5591
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3. Redispatch_EVPI.gms
+Output     C:\Users\Max Bernecker\IDiNA\3. Model Congestion Management\3. Redispatch_EVPI.lst
+
+**** USER ERROR(S) ENCOUNTERED
