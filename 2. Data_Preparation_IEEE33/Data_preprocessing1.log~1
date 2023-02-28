@@ -1,5 +1,4 @@
-
---- Job Data_preprocessing.gms Start 02/13/23 15:46:52 41.4.0 caab8bc0 WEX-WEI x86 64bit/MS Windows
+--- Job Data_preprocessing.gms Start 02/28/23 21:34:34 41.4.0 caab8bc0 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\41\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -27,30 +26,12 @@ GAMS 41.4.0   Copyright (C) 1987-2022 GAMS Development. All rights reserved
 GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
 Input file : C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.xlsx
 Output file: C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
-Total time = 11110 Ms
+Total time = 11516 Ms
 --- Data_preprocessing.gms(48) 3 Mb
 --- GDXin=C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
 --- GDX File ($gdxIn) C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
---- Data_preprocessing.gms(63) 103 Mb
---- GDXin=C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_hpv.gdx
---- GDX File ($gdxIn) C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_hpv.gdx
+--- Data_preprocessing.gms(60) 103 Mb
+--- GDXin=C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Fall_hpv.gdx
+--- GDX File ($gdxIn) C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Fall_hpv.gdx
 --- Data_preprocessing.gms(90) 116 Mb
---- Starting execution: elapsed 0:00:11.479
---- Data_preprocessing.gms(72) 293 Mb  11 secs
---- Data_preprocessing.gms(77) 320 Mb  8 secs
---- Data_preprocessing.gms(85) 440 Mb
---- GDX File (execute_unload) C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
---- Data_preprocessing.gms(87) 440 Mb
-
-GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
-Input file : C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
-Output file: C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\PF_Data_w_hpv_09.xlsx
-Total time = 9157 Ms
---- Data_preprocessing.gms(89) 440 Mb
-
-GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
-Input file : C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
-Output file: C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\VL_Data_w_hpv_09.xlsx
-Total time = 9062 Ms
-*** Status: Normal completion
---- Job Data_preprocessing.gms Stop 02/13/23 15:47:44 elapsed 0:00:52.644
+--- Starting execution: elapsed 0:00:12.016
