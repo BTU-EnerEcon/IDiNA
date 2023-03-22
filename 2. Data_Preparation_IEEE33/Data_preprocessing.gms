@@ -4,7 +4,7 @@ Set
    l        'lines'            / 1*35   /
    g        'dispatchable generating units' / 1*5   /
    p        'solar photovoltaik generators' /1*4  /
-   s        'scenarios'        / s1*s1000/
+   s        'scenarios'        / 1*1000/
    slack(b)                    / 1       /
    Map_G(b,g)/1.1, 18.2, 22.3, 25.4,33.5/
    Map_PV(b,p) /18.1, 22.2, 25.3, 33.4/
@@ -82,9 +82,9 @@ Voltage_violation_up(s,b,t)$((VL_result(s,b,t)*1000 - ukn(b,t)*1.05) gt 0) = VL_
 ;
 Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (ukn(b,t)*0.95) - VL_result(s,b,t)*1000
 ;
-execute_unload "Data.gdx"
+execute_unload "Load_deviation_data.gdx"
 ;
-execute 'gdxxrw.exe Data.gdx o=PF_Data_w_hpv_10.xlsx par=PF_result'
+execute 'gdxxrw.exe Load_deviation_data.gdx o=PF_Data_w_hpv_01.xlsx par=PF_result'
 ;
-execute 'gdxxrw.exe Data.gdx o=VL_Data_w_hpv_10.xlsx par=VL_result'
+execute 'gdxxrw.exe Load_deviation_data.gdx o=VL_Data_w_hpv_01.xlsx par=VL_result'
 $stop

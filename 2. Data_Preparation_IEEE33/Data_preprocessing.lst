@@ -1,4 +1,4 @@
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 13:33:22 Page 1
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 15:30:07 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -9,7 +9,7 @@ C o m p i l a t i o n
    4     l        'lines'            / 1*35   /
    5     g        'dispatchable generating units' / 1*5   /
    6     p        'solar photovoltaik generators' /1*4  /
-   7     s        'scenarios'        / s1*s1000/
+   7     s        'scenarios'        / 1*1000/
    8     slack(b)                    / 1       /
    9     Map_G(b,g)/1.1, 18.2, 22.3, 25.4,33.5/
   10     Map_PV(b,p) /18.1, 22.2, 25.3, 33.4/
@@ -88,13 +88,13 @@ GDXIN   C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_h
   82  ;
   83  Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (ukn(b,t)*0.95) - VL_result(s,b,t)*1000
   84  ;
-  85  execute_unload "Data.gdx"
+  85  execute_unload "Load_deviation_data.gdx"
   86  ;
-  87  execute 'gdxxrw.exe Data.gdx o=PF_Data_w_hpv_10.xlsx par=PF_result'
+  87  execute 'gdxxrw.exe Load_deviation_data.gdx o=PF_Data_w_hpv_01.xlsx par=PF_result'
   88  ;
-  89  execute 'gdxxrw.exe Data.gdx o=VL_Data_w_hpv_10.xlsx par=VL_result'
+  89  execute 'gdxxrw.exe Load_deviation_data.gdx o=VL_Data_w_hpv_01.xlsx par=VL_result'
 STOP C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 13:33:22 Page 2
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 15:30:07 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
@@ -108,13 +108,13 @@ Include File Summary
      5       90 STOP           1      90  C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
 
 
-COMPILATION TIME     =        8.875 SECONDS     17 MB  41.4.0 caab8bc0 WEX-WEI
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 13:33:22 Page 3
+COMPILATION TIME     =        9.140 SECONDS    117 MB  41.4.0 caab8bc0 WEX-WEI
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 15:30:07 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-EXECUTION TIME       =       22.390 SECONDS    341 MB  41.4.0 caab8bc0 WEX-WEI
+EXECUTION TIME       =       31.578 SECONDS    441 MB  41.4.0 caab8bc0 WEX-WEI
 
 
 USER: Small MUD - 5 User License                     S221110|0002AN-WIN

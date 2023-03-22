@@ -1,5 +1,5 @@
 
---- Job Data_preprocessing.gms Start 03/22/23 13:30:22 41.4.0 caab8bc0 WEX-WEI x86 64bit/MS Windows
+--- Job Data_preprocessing.gms Start 03/22/23 15:27:34 41.4.0 caab8bc0 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\41\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -27,29 +27,30 @@ GAMS 41.4.0   Copyright (C) 1987-2022 GAMS Development. All rights reserved
 GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
 Input file : C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.xlsx
 Output file: C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.gdx
-Total time = 8734 Ms
+Total time = 8829 Ms
 --- Data_preprocessing.gms(48) 3 Mb
 --- GDXin=C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.gdx
 --- GDX File ($gdxIn) C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.gdx
---- Data_preprocessing.gms(63) 3 Mb
+--- Data_preprocessing.gms(63) 104 Mb
 --- GDXin=C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_hpv.gdx
 --- GDX File ($gdxIn) C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_hpv.gdx
---- Data_preprocessing.gms(90) 17 Mb
---- Starting execution: elapsed 0:00:08.980
---- Data_preprocessing.gms(77) 218 Mb  6 secs
---- Data_preprocessing.gms(85) 341 Mb
---- GDX File (execute_unload) C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
---- Data_preprocessing.gms(87) 341 Mb
+--- Data_preprocessing.gms(90) 117 Mb
+--- Starting execution: elapsed 0:00:09.093
+--- Data_preprocessing.gms(72) 219 Mb  9 secs
+--- Data_preprocessing.gms(77) 395 Mb  7 secs
+--- Data_preprocessing.gms(85) 441 Mb
+--- GDX File (execute_unload) C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.gdx
+--- Data_preprocessing.gms(87) 441 Mb
 
 GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
-Input file : C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
-Output file: C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\PF_Data_w_hpv_08.xlsx
-Total time = 7172 Ms
---- Data_preprocessing.gms(89) 341 Mb
+Input file : C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.gdx
+Output file: C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\PF_Data_w_hpv_03.xlsx
+Total time = 7141 Ms
+--- Data_preprocessing.gms(89) 441 Mb
 
 GDXXRW           41.4.0 caab8bc0 Dec 14, 2022          WEI x86 64bit/MS Window
-Input file : C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
-Output file: C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\VL_Data_w_hpv_08.xlsx
-Total time = 7250 Ms
+Input file : C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.gdx
+Output file: C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\VL_Data_w_hpv_03.xlsx
+Total time = 7360 Ms
 *** Status: Normal completion
---- Job Data_preprocessing.gms Stop 03/22/23 13:30:54 elapsed 0:00:32.315
+--- Job Data_preprocessing.gms Stop 03/22/23 15:28:16 elapsed 0:00:41.909
