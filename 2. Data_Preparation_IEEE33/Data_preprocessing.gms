@@ -14,7 +14,7 @@ Set
 alias (b,bb)
 ;
 Parameter
-Load_deviation(s,b,t)
+Load_deviation(s,t,b)
 PTDF_PBPK(l,b,t)
 PTDF_PBQK(l,b,t)
 pl(l,t)
@@ -40,12 +40,12 @@ Voltage_violation_lo(s,b,t)
 ;
 
 $onecho > TEP.txt
-par=Load_deviation                 rng=sheet1!A1:CT33001                            rDim=2 cdim=1                   
+par=Load_deviation                 rng=sheet1!A1:AI96001                            rDim=2 cdim=1                   
 $offecho
 ;
 $onUNDF
-$call   gdxxrw Data.xlsx @TEP.txt
-$GDXin  Data.gdx
+$call   gdxxrw Load_deviation_data.xlsx @TEP.txt
+$GDXin  Load_deviation_data.gdx
 $load   Load_deviation
 $GDXin
 $offUNDF
@@ -69,12 +69,12 @@ sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/96);
 sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
 
 *in MW
-PF_result(s,l,t) = (pl(l,t) + sum(b, Load_deviation(s,b,t) * PTDF_PBPK(l,b,t) *1000000))/1000000  
+PF_result(s,l,t) = (pl(l,t) + sum(b, Load_deviation(s,t,b) * PTDF_PBPK(l,b,t) *1000000))/1000000  
 ;
 *in kV
 Vl(b,t) = (sqrt(uki(b,t)*uki(b,t) + ukr(b,t)*ukr(b,t)))/1000
 ;
-VL_result(s,b,t) = Vl(b,t) + sum(bb, Load_deviation(s,b,t) * (1000 *PTDF_UKPK(b,bb,t)))
+VL_result(s,b,t) = Vl(b,t) + sum(bb, Load_deviation(s,t,b) * (1000 *PTDF_UKPK(b,bb,t)))
 ;
 Line_Violation_test(s,l,t) = PF_result(s,l,t) - sLmax_scaled(l)
 ;
@@ -84,7 +84,7 @@ Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (uk
 ;
 execute_unload "Data.gdx"
 ;
-execute 'gdxxrw.exe Data.gdx o=PF_Data_w_hpv_05.xlsx par=PF_result'
+execute 'gdxxrw.exe Data.gdx o=PF_Data_w_hpv_10.xlsx par=PF_result'
 ;
-execute 'gdxxrw.exe Data.gdx o=VL_Data_w_hpv_05.xlsx par=VL_result'
+execute 'gdxxrw.exe Data.gdx o=VL_Data_w_hpv_10.xlsx par=VL_result'
 $stop
