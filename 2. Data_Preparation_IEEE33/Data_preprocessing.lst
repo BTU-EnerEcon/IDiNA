@@ -1,4 +1,4 @@
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 02/28/23 21:35:32 Page 1
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 15:30:07 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -9,7 +9,7 @@ C o m p i l a t i o n
    4     l        'lines'            / 1*35   /
    5     g        'dispatchable generating units' / 1*5   /
    6     p        'solar photovoltaik generators' /1*4  /
-   7     s        'scenarios'        / s1*s1000/
+   7     s        'scenarios'        / 1*1000/
    8     slack(b)                    / 1       /
    9     Map_G(b,g)/1.1, 18.2, 22.3, 25.4,33.5/
   10     Map_PV(b,p) /18.1, 22.2, 25.3, 33.4/
@@ -19,7 +19,7 @@ C o m p i l a t i o n
   14  alias (b,bb)
   15  ;
   16  Parameter
-  17  Load_deviation(s,b,t)
+  17  Load_deviation(s,t,b)
   18  PTDF_PBPK(l,b,t)
   19  PTDF_PBQK(l,b,t)
   20  pl(l,t)
@@ -45,7 +45,7 @@ C o m p i l a t i o n
   40  ;
   41   
   45  ;
-GDXIN   C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
+GDXIN   C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.gdx
 --- LOAD  Load_deviation = 1:Load_deviation
   52   
   53   
@@ -58,7 +58,7 @@ GDXIN   C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gd
   60  *$GDXin   AC_IEEE_Fall_hpv.gdx
   61  *$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
   62  ;
-GDXIN   C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_hpv.gdx
+GDXIN   C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_hpv.gdx
 --- LOAD  pl = 8:pL
 --- LOAD  slmax = 12:sLmax
 --- LOAD  uki = 3:uKi
@@ -75,12 +75,12 @@ GDXIN   C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE
   69  sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
   70   
   71  *in MW
-  72  PF_result(s,l,t) = (pl(l,t) + sum(b, Load_deviation(s,b,t) * PTDF_PBPK(l,b,t) *1000000))/1000000
+  72  PF_result(s,l,t) = (pl(l,t) + sum(b, Load_deviation(s,t,b) * PTDF_PBPK(l,b,t) *1000000))/1000000
   73  ;
   74  *in kV
   75  Vl(b,t) = (sqrt(uki(b,t)*uki(b,t) + ukr(b,t)*ukr(b,t)))/1000
   76  ;
-  77  VL_result(s,b,t) = Vl(b,t) + sum(bb, Load_deviation(s,b,t) * (1000 *PTDF_UKPK(b,bb,t)))
+  77  VL_result(s,b,t) = Vl(b,t) + sum(bb, Load_deviation(s,t,b) * (1000 *PTDF_UKPK(b,bb,t)))
   78  ;
   79  Line_Violation_test(s,l,t) = PF_result(s,l,t) - sLmax_scaled(l)
   80  ;
@@ -88,41 +88,41 @@ GDXIN   C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE
   82  ;
   83  Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (ukn(b,t)*0.95) - VL_result(s,b,t)*1000
   84  ;
-  85  execute_unload "Data.gdx"
+  85  execute_unload "Load_deviation_data.gdx"
   86  ;
-  87  execute 'gdxxrw.exe Data.gdx o=PF_Data_w_hpv_05.xlsx par=PF_result'
+  87  execute 'gdxxrw.exe Load_deviation_data.gdx o=PF_Data_w_hpv_01.xlsx par=PF_result'
   88  ;
-  89  execute 'gdxxrw.exe Data.gdx o=VL_Data_w_hpv_05.xlsx par=VL_result'
-STOP C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 02/28/23 21:35:32 Page 2
+  89  execute 'gdxxrw.exe Load_deviation_data.gdx o=VL_Data_w_hpv_01.xlsx par=VL_result'
+STOP C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 15:30:07 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
 
    SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
 
-     1        1 INPUT          0       0  C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
-     2       47 CALL           1      47  gdxxrw Data.xlsx @TEP.txt
-     3       48 GDXIN          1      48  C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data.gdx
-     4       63 GDXIN          1      63  C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_hpv.gdx
-     5       90 STOP           1      90  C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
+     1        1 INPUT          0       0  C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
+     2       47 CALL           1      47  gdxxrw Load_deviation_data.xlsx @TEP.txt
+     3       48 GDXIN          1      48  C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Load_deviation_data.gdx
+     4       63 GDXIN          1      63  C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\AC_IEEE_Winter_hpv.gdx
+     5       90 STOP           1      90  C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
 
 
-COMPILATION TIME     =       11.516 SECONDS    116 MB  41.4.0 caab8bc0 WEX-WEI
-GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 02/28/23 21:35:32 Page 3
+COMPILATION TIME     =        9.140 SECONDS    117 MB  41.4.0 caab8bc0 WEX-WEI
+GAMS 41.4.0  caab8bc0 Dec 14, 2022          WEX-WEI x86 64bit/MS Windows - 03/22/23 15:30:07 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-EXECUTION TIME       =       41.672 SECONDS    440 MB  41.4.0 caab8bc0 WEX-WEI
+EXECUTION TIME       =       31.578 SECONDS    441 MB  41.4.0 caab8bc0 WEX-WEI
 
 
-USER: Small MUD - 5 User License                     S211124|0002AN-WIN
+USER: Small MUD - 5 User License                     S221110|0002AN-WIN
       BTU Cottbus-Senftenberg, FG Energiewirtschaft              DC5591
       License for teaching and research at degree granting institutions
 
 
 **** FILE SUMMARY
 
-Input      C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
-Output     C:\Users\berne\Documents\GitHub\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.lst
+Input      C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.gms
+Output     C:\Users\Max Bernecker\IDiNA\2. Data_Preparation_IEEE33\Data_preprocessing.lst
