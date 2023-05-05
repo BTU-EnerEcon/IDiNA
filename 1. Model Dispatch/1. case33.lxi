@@ -1,0 +1,28 @@
+B 3 C o m p i l a t i o n
+B 1197 Include File Summary
+B 1211 Equation Listing    SOLVE Dispatch Using LP From line 1144
+D 1214 eq1
+D 1327 eq2
+D 1338 eq3
+D 1349 eq4
+D 1360 eq5
+B 1372 Column Listing      SOLVE Dispatch Using LP From line 1144
+E 1375 OF
+E 1382 Qg
+E 1398 Pv
+E 1417 Pg
+E 1446 Buy_M
+B 1466 Range Statistics    SOLVE Dispatch Using LP From line 1144
+B 1477 Model Statistics    SOLVE Dispatch Using LP From line 1144
+B 1490 Solution Report     SOLVE Dispatch Using LP From line 1144
+F 1525 eq1
+F 1527 eq2
+F 10292 eq3
+F 19057 eq4
+F 62857 eq5
+G 106659 OF
+G 106663 Qg
+G 115428 Pv
+G 150473 Pg
+G 194278 Buy_M
+B 203049 E x e c u t i o n

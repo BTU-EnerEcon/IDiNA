@@ -832,7 +832,7 @@ Table MP_DH(t,*)
 95	29.74
 96	24.90
 ;
-$offtext
+
 Table MP_DH(t,*)
     price            
 1   25.02
@@ -932,6 +932,7 @@ Table MP_DH(t,*)
 95  29.74
 96  24.90
 ;
+$offtext
 Table GenD(g,*) 'generating units characteristics'
 
     pmax    pmin    Qmax    Qmin   var
@@ -995,41 +996,49 @@ $offtext
 
 Parameter
 load_up
-bus_up
 load_p(t)
 load_q(t)
 CF(t)
 profil(t)
 BP(b)
 BQ(b)
-Load_bus_p(b,t)
-Load_bus_q(b,t)
+Load_bus_p(t,b)
+Load_bus_q(t,b)
 system_costs
+MP_DH(t)
 ;
 $onecho > TEP.txt
-par=load_up                        rng=data!B312:H408                    rDim=1 cdim=1
-par=bus_up                         rng=case33!C23:K56                    rDim=1 cdim=1
+par=load_up                        rng=data_case_study!A1:E8761                    rDim=1 cdim=1
+par=Load_bus_p                     rng=data_case_study!G2:AN8762                    rDim=1 cdim=1
+par=Load_bus_q                     rng=data_case_study!AP2:BW8762                    rDim=1 cdim=1
 $offecho
 *par=load_up                        rng=data!B16:H112                    rDim=1 cdim=1 winter
 
 $onUNDF
 $call   gdxxrw data_case33.xlsx @TEP.txt
 $GDXin  data_case33.gdx
-$load   load_up, bus_up
+$load   load_up, Load_bus_p, Load_bus_q
 $GDXin
 $offUNDF
 
 
 
-load_p(t) = load_up(t,'Active Demand (MW)')
+load_p(t) = load_up(t,'Active Demand (MW)') /1000
 ;
-load_q(t) = load_up(t,'Reactive Demand (var)')
+load_q(t) = load_up(t,'Reactive Demand (var)')  /1000
 ;
-CF(t)     = load_up(t,'CF')
+CF(t)     = load_up(t,'Capacity factor PV')
 ;
-profil(t) = load_up(t,'profil')
+MP_DH(t)  = load_up(t,'Day_ahead_price')
 ;
-BP(b)     = bus_up(b,'Pd') 
+Load_bus_p(t,b) =  Load_bus_p(t,b)/1000
 ;
-BQ(b)     = bus_up(b,'Qd') 
+Load_bus_q(t,b) =  Load_bus_q(t,b)/1000
 ;
+*profil(t) = load_up(t,'profil')
+*;
+*BP(b)     = bus_up(b,'Pd') 
+*;
+*BQ(b)     = bus_up(b,'Qd') 
+*;
+*

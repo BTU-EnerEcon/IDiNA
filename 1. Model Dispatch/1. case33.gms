@@ -15,7 +15,7 @@
 
 set b 'buses' /1*33/;
 set l 'lines' /1*35/;
-set t 'timesteps' /1*96/;
+set t 'timesteps' /1*8760/;
 set g 'conventional generators' /1*5/;
 set p 'solar photovoltaik generators' /1*4/;
 
@@ -53,10 +53,10 @@ Buy_M(t)
 Equation  eq1, eq2, eq3, eq4, eq5  ;
 
 
-eq1..   OF =e= sum((g,t)$Generator(g) , Pg(g,t) * MP_DH(t,'price')) - sum((g,t)$Generator(g) , Pg(g,t) * GenD(g,'var')$GenD(g,'Pmax'))
-             + sum((g,t)$Slack_generator(g), Pg(g,t) * MP_DH(t,'price')) - sum((g,t)$Slack_generator(g) , Pg(g,t) * GenD(g,'var')$GenD(g,'Pmax'))
-             + sum((p,t), Pv(p,t) * MP_DH(t,'price'))
-             - sum(t, Buy_M(t) *  MP_DH(t,'price'));
+eq1..   OF =e= sum((g,t)$Generator(g) , Pg(g,t) * MP_DH(t)) - sum((g,t)$Generator(g) , Pg(g,t) * GenD(g,'var')$GenD(g,'Pmax'))
+             + sum((g,t)$Slack_generator(g), Pg(g,t) * MP_DH(t)) - sum((g,t)$Slack_generator(g) , Pg(g,t) * GenD(g,'var')$GenD(g,'Pmax'))
+             + sum((p,t), Pv(p,t) * MP_DH(t))
+             - sum(t, Buy_M(t) *  MP_DH(t));
              
                  
 
@@ -108,20 +108,20 @@ report2(t,'MP_Q')   = eq3.m(t);
 report3(g,t)        = Pg.l(g,t)+EPS;
 report4(g,t)        = Qg.l(g,t)+EPS;
 
-Load_bus_p(b,t)         =  BP(b) * profil(t);
-Load_bus_q(b,t)         =  BQ(b) * profil(t);
+*Load_bus_p(b,t)         =  BP(b) * profil(t);
+*Load_bus_q(b,t)         =  BQ(b) * profil(t);
 
-sKnr(b,t)           = sum(g, Pg.l(g,t)$Map_G(b,g)) + sum(p, Pv.l(p,t)$Map_PV(b,p)) +  Buy_M.l(t) - Load_bus_p(b,t);
-sKni(b,t)           = sum(g, Qg.l(g,t)$Map_G(b,g)) - Load_bus_q(b,t);
+sKnr(b,t)           = sum(g, Pg.l(g,t)$Map_G(b,g)) + sum(p, Pv.l(p,t)$Map_PV(b,p)) +  Buy_M.l(t) - Load_bus_p(t,b);
+sKni(b,t)           = sum(g, Qg.l(g,t)$Map_G(b,g)) - Load_bus_q(t,b);
 
 D_genP(g,t)         = Pg.l(g,t);
 pv_infeed(b,t)      = sum(p, Pv.l(p,t)$Map_PV(b,p));
 
 system_costs = sum((g,t)$Generator(g) , Pg.l(g,t) * GenD(g,'var')$GenD(g,'Pmax'))
               +sum((g,t)$Slack_generator(g) , Pg.l(g,t) * GenD(g,'var')$GenD(g,'Pmax'))
-              +sum(t, Buy_M.l(t) *  MP_DH(t,'price'));
+              +sum(t, Buy_M.l(t) *  MP_DH(t));
 
-execute_unload "IEEE_fall_lpv.gdx"; 
+execute_unload "IEEE_Case_Study.gdx"; 
 
 
 
