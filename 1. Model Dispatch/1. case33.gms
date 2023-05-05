@@ -121,8 +121,10 @@ system_costs = sum((g,t)$Generator(g) , Pg.l(g,t) * GenD(g,'var')$GenD(g,'Pmax')
               +sum((g,t)$Slack_generator(g) , Pg.l(g,t) * GenD(g,'var')$GenD(g,'Pmax'))
               +sum(t, Buy_M.l(t) *  MP_DH(t));
 
-execute_unload "IEEE_Case_Study.gdx"; 
+execute_unload "IEEE_Case_Study.gdx";
 
+execute_unload "AC_Input_IEEE_Case_Study.gdx"
+sKnr, sKni
 
 
 
