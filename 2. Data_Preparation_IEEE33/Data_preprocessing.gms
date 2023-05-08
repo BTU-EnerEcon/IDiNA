@@ -1,5 +1,5 @@
 Set
-   t                           / 1*96    /
+   t                           / 1*8760    /
    b        'network buses'    / 1*33    /
    l        'lines'            / 1*35   /
    g        'dispatchable generating units' / 1*5   /
@@ -14,7 +14,7 @@ Set
 alias (b,bb)
 ;
 Parameter
-Load_deviation(s,t,b)
+RH_Load_deviation(s,t,b)
 PTDF_PBPK(l,b,t)
 PTDF_PBQK(l,b,t)
 pl(l,t)
@@ -40,41 +40,30 @@ Voltage_violation_lo(s,b,t)
 ;
 
 $onecho > TEP.txt
-par=Load_deviation                 rng=sheet1!A1:AI96001                            rDim=2 cdim=1                   
-$offecho
+par=RH_Load_deviation                 rng=sheet1!A1:AI96001                            rDim=2 cdim=1                   
+$offecho  
 ;
 $onUNDF
-$call   gdxxrw Load_deviation_data.xlsx @TEP.txt
-$GDXin  Load_deviation_data.gdx
-$load   Load_deviation
+$call   gdxxrw Load_deviation.xlsx @TEP.txt
+$GDXin  Load_deviation.gdx
+$load   RH_Load_deviation
 $GDXin
 $offUNDF
 
-
-*$GDXin   AC_IEEE_Spring_hpv.gdx
-*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-*;
-*$GDXin   AC_IEEE_Summer_hpv.gdx
-*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-*;
-*$GDXin   AC_IEEE_Fall_hpv.gdx
-*$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-;
-$GDXin   AC_IEEE_Winter_hpv.gdx
+$GDXin   AC_IEEE_Case_study.gdx
 $load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-;
 
 
-sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/96);
-sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/96);
+sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/8760);
+sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/8760);
 
 *in MW
-PF_result(s,l,t) = (pl(l,t) + sum(b, Load_deviation(s,t,b) * PTDF_PBPK(l,b,t) *1000000))/1000000  
+PF_result(s,l,t) = (pl(l,t) + sum(b, RH_Load_deviation(s,t,b) * PTDF_PBPK(l,b,t) *1000000))/1000000  
 ;
 *in kV
 Vl(b,t) = (sqrt(uki(b,t)*uki(b,t) + ukr(b,t)*ukr(b,t)))/1000
 ;
-VL_result(s,b,t) = Vl(b,t) + sum(bb, Load_deviation(s,t,b) * (1000 *PTDF_UKPK(b,bb,t)))
+VL_result(s,b,t) = Vl(b,t) + sum(bb, RH_Load_deviation(s,t,b) * (1000 *PTDF_UKPK(b,bb,t)))
 ;
 Line_Violation_test(s,l,t) = PF_result(s,l,t) - sLmax_scaled(l)
 ;
