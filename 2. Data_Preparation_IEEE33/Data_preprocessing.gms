@@ -14,7 +14,13 @@ Set
 alias (b,bb)
 ;
 Parameter
+Base_load(b)
+Base_load_time_series(t,b)
+
+RH_Error_SLP(s,t,b)
+RH_Error_ARIMA(s,t,b)
 RH_Load_deviation(s,t,b)
+
 PTDF_PBPK(l,b,t)
 PTDF_PBQK(l,b,t)
 pl(l,t)
@@ -38,20 +44,35 @@ Voltage_violation_up(s,b,t)
 Voltage_violation_lo(s,b,t)
 
 ;
-
 $onecho > TEP.txt
-par=RH_Load_deviation                 rng=sheet1!A1:AI96001                            rDim=2 cdim=1                   
-$offecho  
+par=Base_load                 rng=data_case_study!A8765:B8797                            rDim=1 cdim=0
+par=Base_load_time_series     rng=data_case_study!G2:AN8762                              rDim=1 cdim=1      
+$offecho
 ;
 $onUNDF
-$call   gdxxrw Load_deviation.xlsx @TEP.txt
-$GDXin  Load_deviation.gdx
-$load   RH_Load_deviation
+$call   gdxxrw data_case33.xlsx @TEP.txt
+$GDXin  data_case33.gdx
+$load   Base_load,Base_load_time_series
 $GDXin
 $offUNDF
-
+;
+$onecho > TEP.txt
+par=RH_Error_SLP                 rng=sheet1!A1:AI96001                            rDim=2 cdim=1                   
+$offecho
+;
+$onUNDF
+$call   gdxxrw Load_deviation_SLP.xlsx @TEP.txt
+$GDXin  Load_deviation_SLP.gdx
+$load   RH_Error_SLP
+$GDXin
+$offUNDF
+;
 $GDXin   AC_IEEE_Case_study.gdx
 $load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
+;
+
+RH_Load_deviation(s,t,b) = Base_load(b) * RH_Error_SLP(s,t,b)  - Base_load(b) * Base_load_time_series(t,b)
+;
 
 
 sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/8760);
@@ -73,7 +94,7 @@ Voltage_violation_lo(s,b,t)$((ukn(b,t)*0.95 - VL_result(s,b,t)*1000) gt 0) = (uk
 ;
 execute_unload "Load_deviation_data.gdx"
 ;
-execute 'gdxxrw.exe Load_deviation_data.gdx o=PF_Data_w_hpv_01.xlsx par=PF_result'
+execute 'gdxxrw.exe Load_deviation_data.gdx o=PF_Data_SLP.xlsx par=PF_result'
 ;
-execute 'gdxxrw.exe Load_deviation_data.gdx o=VL_Data_w_hpv_01.xlsx par=VL_result'
+execute 'gdxxrw.exe Load_deviation_data.gdx o=VL_Data_SLP.xlsx par=VL_result'
 $stop
