@@ -14,4 +14,4 @@ Digitalization is a global trend in energy systems and beyond. However, it is of
 
 
 ## Project IDiNA - Intelligente Digitalisierung der Energieversorgung zur Optimierung des Netzbetriebs und zur Erhöhung der Akzeptanz“
-![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Logo/IDiNA_Projektlogo.svg) 
+![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Logo/IDiNA_Projektlogo.svg)  ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Logo/Logo_BMWK.svg)
