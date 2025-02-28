@@ -108,13 +108,7 @@ max_load_per_consumer(b) = smax(t, load_per_consumer(b,t))
 ;
 
 *###########################################################################################################
-* read in x% quantil power flows and voltage levels from existing gdi file 
-
-$GDXin  2_Uniform_Rollout_1
-$load   IN_PF_max, IN_VL_max, D_genP, pv_infeed, CF,pl,slmax,sl, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-
-
-* read in x% quantil power flows and voltage levels from xlsx files
+* read in x% quantil power flows and voltage levels from xlsx files in specifyed folder
 %on_Rollout%$Ontext
 ;
 $onecho > PF.txt
