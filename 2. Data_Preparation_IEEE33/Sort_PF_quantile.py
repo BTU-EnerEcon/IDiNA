@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 # Pfad zu den Excel-Dateien
-path = r"C:\Users\Gams_Bernecker\Desktop\IDiNA\Paper_model_new\2. Data_preparation_IEEE\PF_Grid_SLP"
+path = r"put here the path to the simulated power flows"
 
 # Liste der Excel-Dateien in dem Ordner
 files = [f for f in os.listdir(path) if f.endswith(".xlsx")]
@@ -25,9 +25,9 @@ for file in files:
         min_values = group.iloc[:, 2:].min(axis=0)
         max_values = group.iloc[:, 2:].max(axis=0)
 
-        # Berechne das 5%-Quantil für negative Werte und das 95%-Quantil für positive Werte
-        quantiles = pd.concat([group.iloc[:, 2:].quantile(q=0.05).where(min_values < 0, other=group.iloc[:, 2:].quantile(q=0.95)),
-                               group.iloc[:, 2:].quantile(q=0.95).where(max_values > 0, other=group.iloc[:, 2:].quantile(q=0.05))])
+        # Berechne das x%-Quantil für negative Werte und das 1-x%-Quantil für positive Werte
+        quantiles = pd.concat([group.iloc[:, 2:].quantile(q=0.01).where(min_values < 0, other=group.iloc[:, 2:].quantile(q=0.99)),
+                               group.iloc[:, 2:].quantile(q=0.99).where(max_values > 0, other=group.iloc[:, 2:].quantile(q=0.01))])
 
         # Füge die Ergebnisse in ein neues DataFrame ein
         result = pd.DataFrame(quantiles.to_dict(), index=[name])

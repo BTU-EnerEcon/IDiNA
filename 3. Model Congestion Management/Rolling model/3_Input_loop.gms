@@ -4,7 +4,7 @@ sLmax_scaled(l)$(ord(l) gt 1) = (sum(t, sLmax(l,t)/1000)/8760);
 sLmax_scaled(l)$(ord(l) eq 1) = (sum(t, sLmax(l,t)/1000)/8760);
    
    
-PF_result(l,t) = IN_PF_max(l,t)
+PF_result(l,t) = IN_PF_max(l,t) * 1000000
 ;
 VL_result(b,t)= IN_VL_max(b,t)
 ;

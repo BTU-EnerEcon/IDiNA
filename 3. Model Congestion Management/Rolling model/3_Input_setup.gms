@@ -17,6 +17,17 @@ Table GenPV(p,*) 'generating units characteristics'
 4    0.2
 ;
 
+Scalar
+*in EUR/MWh
+Flex_price /20/
+annualized_inv_cost_SM /0.08/
+
+*in EUR/MVAR
+reactive_power_costs /0/
+*25
+
+AVG_MP /98/
+;
 
 Parameter
 load_up
@@ -26,6 +37,11 @@ load_p(t)
 load_q(t)
 CF(t)
 
+consumers(b)
+Load_per_consumer(b,t)
+max_load_per_consumer(b)
+
+
 MP_DH(t)
 profil(t)
 
@@ -34,7 +50,7 @@ BQ(b)
 D_genP(g,t)
 pv_infeed(b,t)
 
-Load_bus_p(b,t)
+Load_bus_p(t,b)
 load_bus_t(b,t)
 
 Load_bus_q(b,t)
@@ -68,49 +84,61 @@ Voltage_violation_up(b,t)
 Voltage_violation_lo(b,t)
 
 $onecho > TEP.txt
-par=load_up                        rng=data_case_study!A1:E8761                    rDim=1 cdim=1
+par=load_up                        rng=data_case_study!A1:E8761                     rDim=1 cdim=1
 par=Load_bus_p                     rng=data_case_study!G2:AN8762                    rDim=1 cdim=1
-par=Load_bus_q                     rng=data_case_study!AP2:BW8762                    rDim=1 cdim=1
+par=Load_bus_q                     rng=data_case_study!AP2:BW8762                   rDim=1 cdim=1
+par=consumers                      rng=Merged_SM!A1:B33                             rDim=1 cdim=0
 $offecho
-*par=load_up                        rng=data!B16:H112                    rDim=1 cdim=1 winter
 
 $onUNDF
 $call   gdxxrw data_case33.xlsx @TEP.txt
 $GDXin  data_case33.gdx
-$load   load_up, Load_bus_p, Load_bus_q
+$load   load_up, Load_bus_p, Load_bus_q, consumers
 $GDXin
 $offUNDF
 ;
 MP_DH(t)  = load_up(t,'Day_ahead_price')
 ;
+*from KW in W
+load_bus_t(b,t) = Load_bus_p(t,b) * 1000
+;
+load_per_consumer(b,t)$(ord(b) gt 1) = load_bus_t(b,t) / consumers(b)
+;
+max_load_per_consumer(b) = smax(t, load_per_consumer(b,t))
+;
+
+*###########################################################################################################
+* read in x% quantil power flows and voltage levels from existing gdi file 
+
+$GDXin  2_Uniform_Rollout_1
+$load   IN_PF_max, IN_VL_max, D_genP, pv_infeed, CF,pl,slmax,sl, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
 
 
-
-%on_SLP%$Ontext
+* read in x% quantil power flows and voltage levels from xlsx files
+%on_Rollout%$Ontext
 ;
 $onecho > PF.txt
-par=IN_PF_max                   rng=Sheet1!A1:LXY33                      rDim=1 cdim=1                
+par=IN_PF_max                   rng=Sheet1!A1:LXY33                      rDim=1 cdim=1               
 $offecho
 $onUNDF
-$call   gdxxrw I=%SLP%PF_Data_SLP_Q95.xlsx O=%SLP%PF_Data_SLP_Q95.gdx @PF.txt
-$GDXin  %SLP%PF_Data_SLP_Q95.gdx
+$call   gdxxrw I=%Rollout%result_PF_No_Rollout.xlsx O=%Rollout%result_PF_No_Rollout.gdx @PF.txt
+$GDXin  %Rollout%result_PF_No_Rollout.gdx
 $load   IN_PF_max
-
 $GDXin
 $offUNDF
 ;
+*%ARIMA%PF_Data_ARIMA_Q95
 $onecho > VL.txt
-par=IN_VL_max                    rng=Sheet1!A1:LXY34                       rDim=1 cdim=1          
+par=IN_VL_max                        rng=Sheet1!A1:LXY34                       rDim=1 cdim=1            
 $offecho
 $onUNDF
-$call   gdxxrw I=%SLP%VL_Data_SLP_Q95.xlsx O=%SLP%VL_Data_SLP_Q95.gdx @VL.txt
-$GDXin  %SLP%VL_Data_SLP_Q95.gdx
+$call   gdxxrw I=%Rollout%result_VL_No_Rollout.xlsx O=%Rollout%result_VL_No_Rollout.gdx @VL.txt
+$GDXin  %Rollout%result_VL_No_Rollout.gdx
 $load   IN_VL_max
-
 $GDXin
 $offUndf
 ;
-
+*%ARIMA%VL_Data_ARIMA_Q95
 $GDXin   IEEE_Case_study.gdx
 $load    D_genP, pv_infeed, CF
 *, load_up_b
@@ -118,82 +146,10 @@ $load    D_genP, pv_infeed, CF
 
 $GDXin   AC_IEEE_Case_study.gdx
 $load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-
 ;
 $ontext
 $offtext
 
 
-*###########################################################################################################
-
-%on_ARIMA%$Ontext
-;
-$onecho > PF.txt
-par=IN_PF_max                   rng=Tabelle1!A1:CT31001                      rDim=2 cdim=1               
-$offecho
-$onUNDF
-$call   gdxxrw I=%ARIMA%PF_Data_ARIMA_Q95.xlsx O=%ARIMA%PF_Data_ARIMA_Q95.gdx @PF.txt
-$GDXin  %ARIMA%PF_Data_ARIMA_Q95.gdx
-$load   IN_PF_max_ARIMA
-$GDXin
-$offUNDF
-;
-$onecho > VL.txt
-par=IN_VL_max                        rng=Tabelle1!A1:CT33001                       rDim=2 cdim=1            
-$offecho
-$onUNDF
-$call   gdxxrw I=%ARIMA%VL_Data_ARIMA_Q95.xlsx O=%ARIMA%VL_Data_ARIMA_Q95.gdx @VL.txt
-$GDXin  %ARIMA%VL_Data_ARIMA_Q95.gdx
-$load   IN_VL_max_ARIMA
-$GDXin
-$offUndf
-;
-
-$GDXin   IEEE_Case_study.gdx
-$load    D_genP, pv_infeed, CF, load_up
-*, load_up_b
-
-
-$GDXin   AC_IEEE_Case_study.gdx
-$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-;
-
-$ontext
-$offtext
-*###########################################################################################################
-
-%on_Normal%$Ontext
-;
-$onecho > PF.txt
-par=IN_PF_max                   rng=Tabelle1!A1:CT31001                      rDim=2 cdim=1               
-$offecho
-$onUNDF
-$call   gdxxrw I=%Normal%PF_Data_Q95.xlsx O=%Normal%PF_Data_Q95.gdx @PF.txt
-$GDXin  %Normal%PF_Data_Q95.gdx
-$load   IN_PF_max_Normal
-$offUNDF
-;
-$onecho > VL.txt
-par=IN_VL_max                        rng=Tabelle1!A1:CT33001                       rDim=2 cdim=1         
-$offecho
-$onUNDF
-$call   gdxxrw I=%Normal%VL_Data_Q95.xlsx O=%Normal%VL_Data_Q95.gdx @VL.txt
-$GDXin  %Normal%VL_Data_Q95.gdx
-$load   IN_VL_max_Normal
-$GDXin
-$offUndf
-;
-
-$GDXin   IEEE_Case_study.gdx
-$load    D_genP, pv_infeed, CF, load_up, load_up_b
-
-
-$GDXin   AC_IEEE_Case_study.gdx
-$load    pl,slmax, uki, ukr, ukn, PTDF_PBPK, PTDF_PBQK, PTDF_UKPK, PTDF_UKQK
-
-$ontext
-$offtext
-*Load_bus(b) = load_up_b(b,'Active Demand')
-*;
 
 
