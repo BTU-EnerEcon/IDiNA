@@ -1,0 +1,28 @@
+digraph {
+	A [label=Start]
+	B [label="Input Netzwerkdaten"]
+	A -> B
+	C [label="Start Rolling Horizon"]
+	B -> C
+	D [label="Initialisierung Tag H"]
+	D1 [label="Input Stromerzeugungsprofile"]
+	D2 [label="Input Power Flows & Voltage Levels"]
+	D3 [label="Input Sensitivitätsfaktoren"]
+	C -> D
+	D -> D1
+	D -> D2
+	D -> D3
+	E [label="Engpassmanagement für Tag H"]
+	D1 -> E
+	D2 -> E
+	D3 -> E
+	F [label="Check: Tag H = Max Tage?"]
+	E -> F
+	G [label="Ja: Ende Rolling Horizon" shape=parallelogram]
+	H [label="Nein: Tag H = Tag H +1"]
+	F -> G [label=Ja]
+	F -> H [label=Nein]
+	H -> C
+	I [label="Ausgabe der Daten & Analyse" shape=parallelogram]
+	G -> I
+}
