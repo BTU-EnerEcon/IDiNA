@@ -7,7 +7,7 @@ Digitalization is a global trend in energy systems and beyond. However, it is of
 
 This repository aims to contribute to the open sience community, making our data of the underlying study available and the results transparent and replicable. 
 
-### Code for Data Preparation
+### Step1:) Code for Data Preparation
 
 **In the folder "Data_Preparation_IEEE33" one can find:**
 - the power flows, voltage levels and sensitifity facotrs based on the powerplant dispatch determined in our case study as well as other tehcnical grid specification (File: "AC_IEEE_Case_Study.gdx)
@@ -17,15 +17,16 @@ This repository aims to contribute to the open sience community, making our data
 
 **The resulting x% quantiles of the power flows and voltage levels serve as input data for the congestion management model.**
 
-### Code for Congestion Management Model
+### Step 2) Congestion Management Model
 
-**Based on the data generated in the "Data_Preparation_IEEE33" folder one can use the x% quantiles of power flows and voltage levels to run the congestion management model**
-- one needs:
+**Based on the data generated in the "Data_Preparation_IEEE33" folder one can use the x% quantiles of power flows and voltage levels to run the congestion management model
+Therefor one needs:**
+
 1) the data for the model, which are stored in the "data_case33" xlsx file and the including the:
   - the solar PV capacity factor
   - the electricity day-ahead price time series
 2) the power flows and voltage levels generated in the previous step
-- the data for our study are uploaded at ZENONDO. URL:
+  - the data for our study are uploaded at ZENONDO. URL:
 3) the data of the sensitivity factors, nominal voltage level and maximum thermal line carrying capacity (File: "AC_IEEE_Case_Study.gdx")
 
 ## Case Study
