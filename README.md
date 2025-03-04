@@ -9,7 +9,7 @@ This repository aims to contribute to the open sience community, making our data
 
 ### Code for Data Preparation
 
-**In the folder "2. Data_Preparation_IEEE33" one can find:**
+**In the folder "Data_Preparation_IEEE33" one can find:**
 - the power flows, voltage levels and sensitifity facotrs based on the powerplant dispatch determined in our case study as well as other tehcnical grid specification (File: "AC_IEEE_Case_Study.gdx)
 - calculate the forecast errors for each time step using the Monte Carlo simulation for each node depending on the nodal standard deviation of the errrors (File: "Calculate_Different_Deviation_Error.ipynb")
 - calculate the resulting power flows and voltage levels using the sensitifiy factors for each time step considering the simulated forecast errors (File: "Gata_Preprocessing.gms")
@@ -19,7 +19,7 @@ This repository aims to contribute to the open sience community, making our data
 
 ### Code for Congestion Management Model
 
-**Based on the data generated in the 2. "Data_Preparation_IEEE33" folder one can use the x% quantiles of power flows and voltage levels to run the congestion management model**
+**Based on the data generated in the "Data_Preparation_IEEE33" folder one can use the x% quantiles of power flows and voltage levels to run the congestion management model**
 - one needs:
 1) the data for the model, which are stored in the "data_case33" xlsx file and the including the:
   - the solar PV capacity factor
