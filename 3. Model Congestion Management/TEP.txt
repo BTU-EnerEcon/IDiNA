@@ -1,3 +1,0 @@
-par=load_up                        rng=data_case_study!A1:E8761                    rDim=1 cdim=1
-par=Load_bus_p                     rng=data_case_study!G2:AN8762                    rDim=1 cdim=1
-par=Load_bus_q                     rng=data_case_study!AP2:BW8762                    rDim=1 cdim=1
