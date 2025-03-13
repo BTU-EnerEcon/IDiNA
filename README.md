@@ -9,8 +9,8 @@ This repository aims to contribute to the open sience community, making our data
 
 ### Step1:) Code for Data Preparation
 
-**In the folder "Data_Preparation_IEEE33" one can find:**
-- the power flows, voltage levels and sensitifity facotrs based on the powerplant dispatch determined in our case study as well as other tehcnical grid specification (File: "AC_IEEE_Case_Study.gdx)
+**In the folder "Data_Preparation_IEEE33" one can:**
+- find the power flows, voltage levels and sensitifity factors based on the powerplant dispatch determined in our case study as well as other tehcnical grid specification (File: "AC_IEEE_Case_Study.gdx)
 - calculate the forecast errors for each time step using the Monte Carlo simulation for each node depending on the nodal standard deviation of the errrors (File: "Calculate_Different_Deviation_Error.ipynb")
 - calculate the resulting power flows and voltage levels using the sensitifiy factors for each time step considering the simulated forecast errors (File: "Gata_Preprocessing.gms")
 - calculate the x% quantiles for the resulting power flows and voltage levels for each time step(Files: "Sort_PF_quantile.py", "Sort_VL_quantile.py")
@@ -25,8 +25,8 @@ Therefor one needs:**
 1) the data for the model, which are stored in the "data_case33" xlsx file and the including the:
   - the solar PV capacity factor
   - the electricity day-ahead price time series
+  - the nodal demand time series
 2) the power flows and voltage levels generated in the previous step
-  - the data for our study are uploaded at ZENONDO. URL:
 3) the data of the sensitivity factors, nominal voltage level and maximum thermal line carrying capacity (File: "AC_IEEE_Case_Study.gdx")
 
 ## Case Study
