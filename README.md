@@ -37,11 +37,11 @@ We used the IEEE 33-node test system to model a typical distribution gird system
 
 ### Uncertainty Simulation
 
-1) We measure the load forecasting accuracy for each nodal demand time series in the system based on a SLP forecast and a ARIMA forecast
+1) We measure the load forecasting accuracy for each nodal demand time series in the system based on a SLP forecast and a ARIMA forecast.
 
 ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Nodal_SD.svg)
 
-2) Then we take the standard deviation of each node to simulate a given sample of forecast errors for each node and timestep to calcaulte resulting power flows and voltage levels confidence intervalls
+2) Then we take the standard deviation of each node to simulate a given sample of forecast errors for each node and timestep to calcaulte resulting power flows and voltage levels confidence intervalls.
 
 ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Vergleich%20Lastrofilprognose%20SLP%20vs.%20ARIMA.svg)
 
