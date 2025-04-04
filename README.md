@@ -41,9 +41,11 @@ We used the IEEE 33-node test system to model a typical distribution gird system
 
 ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Nodal_SD.svg)
 
-2) Then we take the standard deviation of each node to simulate a given sample of forecast errors for each node and timestep to calcaulte resulting power flows and voltage levels
+2) Then we take the standard deviation of each node to simulate a given sample of forecast errors for each node and timestep to calcaulte resulting power flows and voltage levels confidence intervalls
 
+![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Vergleich%20Lastrofilprognose%20SLP%20vs.%20ARIMA.svg)
 
+3) On this basis we calculate in the congestion management model cost minimal redispatch actions and their associated costs.
 
 ## Project IDiNA - Intelligente Digitalisierung der Energieversorgung zur Optimierung des Netzbetriebs und zur Erhöhung der Akzeptanz“
 ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Logo/IDiNA_Projektlogo.svg)  ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Logo/Logo_BMWK.svg)
