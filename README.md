@@ -41,7 +41,8 @@ We used the IEEE 33-node test system to model a typical distribution gird system
 
 ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Nodal_SD.svg)
 
-## Case Study Results
+2) Then we take the standard deviation of each node to simulate a given sample of forecast errors for each node and timestep to calcaulte resulting power flows and voltage levels
+
 
 
 ## Project IDiNA - Intelligente Digitalisierung der Energieversorgung zur Optimierung des Netzbetriebs und zur Erhöhung der Akzeptanz“
