@@ -35,13 +35,13 @@ We used the IEEE 33-node test system to model a typical distribution gird system
  
 ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/IEEE_Grid.svg)
 
+### Uncertainty Simulation
 
-![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Vergleich%20Lastrofilprognose%20SLP%20vs.%20ARIMA.svg)
-
-
-## Case Study Results
+1) We measure the load forecasting accuracy for each nodal demand time series in the system based on a SLP forecast and a ARIMA forecast
 
 ![](https://github.com/BTU-EnerEcon/IDiNA/blob/main/Visualization%20Results/Nodal_SD.svg)
+
+## Case Study Results
 
 
 ## Project IDiNA - Intelligente Digitalisierung der Energieversorgung zur Optimierung des Netzbetriebs und zur Erhöhung der Akzeptanz“
